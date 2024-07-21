@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests\FileUploadRequest;
 use App\Services\FileUploadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\File;
 use App\Models\ItemAction;
+use App\Models\Templink;
 
 
 class FileController extends Controller
@@ -41,5 +42,35 @@ class FileController extends Controller
         ]);
 
         return response()->json(['message' => $filePath]);
+    }
+
+
+    public function getTempLink(File $file,Request $request): String
+    {
+        $tempLink = $file->links()->create([]);
+        return env('APP_URL').'/temp/download/'.$tempLink->id;
+    }
+
+
+    //Check if the file is expired or not
+    public function downloadTemp(Templink $link,Request $request)
+    {
+        if ($link->expired_at < now()) {
+            abort(403, 'File Expired');
+        }
+        $file = $link->file;
+        return Storage::download($file->path);
+    }
+
+
+    // allow to download url
+    public function download(File $file,Request $request)
+    {
+
+        if (!Storage::exists($file->path)) {
+            abort(404, 'File not found');
+        }
+        // $filePath = Storage::path($file->path);
+        return Storage::download($file->path);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\FolderController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpaceController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemActionController;
 
 use Inertia\Inertia;
@@ -100,9 +101,7 @@ Route::post('client/file', [FileController::class, 'upload'])
 //Admin
 
 
-Route::get('admin', function () {
-    return Inertia::render('Admin/Index');
-})
+Route::get('admin',[DashboardController::class, 'index'])
 ->name('admin.home')
 ->middleware('auth');
 
@@ -165,3 +164,20 @@ Route::put('admin/spaces/{space}/restore', [SpaceController::class, 'restore'])
 ->name('admin.spaces.restore')
 ->middleware('auth');
 
+
+//Temp Link Generator
+
+
+Route::get('temp/download/{link}', [FileController::class, 'downloadTemp'])
+->name('local.temp');
+
+
+//Generate File Link
+Route::post('client/{file}/temp', [FileController::class, 'getTempLink'])
+->name('link.generate')
+->middleware('auth');
+
+//Download File
+Route::get('download/{file}', [FileController::class, 'download'])
+->name('link.download')
+->middleware('auth');

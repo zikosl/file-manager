@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
 use App\Models\Folder;
 use App\Models\ItemAction;
-
+use App\Models\Templink;
 
 class File extends Model
 {
@@ -56,8 +56,15 @@ class File extends Model
     {
         return $this->belongsTo(Folder::class);
     }
+
+
     public function item_action(): BelongsTo
     {
         return $this->belongsTo(ItemAction::class);
+    }
+
+    public function links()
+    {
+        return $this->hasMany(Templink::class);
     }
 }

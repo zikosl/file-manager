@@ -27,12 +27,14 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Link, router, usePage } from "@inertiajs/react"
-import { IconArrowBack, IconFolder, IconFolderBolt, IconFolderMinus, IconFolderStar, IconStarFilled } from "@tabler/icons-react"
+import { IconArrowBack, IconDownload, IconFolder, IconFolderBolt, IconFolderMinus, IconFolderStar, IconLink, IconStarFilled } from "@tabler/icons-react"
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { useFolderConfig } from "@/hooks/use-folder-config"
 import { useStore } from "zustand"
 import { Files_Folders } from "@/types"
 import { FileIconCustom } from "@/lib/extensions"
+import axios from "axios"
+import { toast } from "sonner"
 
 
 
@@ -218,9 +220,9 @@ export function DataTable({ data }: { data: Files_Folders[] }) {
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Filter Names..."
-                    value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+                    value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("title")?.setFilterValue(event.target.value)
+                        table.getColumn("name")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
                 />
@@ -287,6 +289,7 @@ export function DataTable({ data }: { data: Files_Folders[] }) {
                                             folderPath.router == "trash" ? <>
                                                 <ContextMenuItem
                                                     className="cursor-pointer"
+                                                    onClick={() => router.delete(route("client.drive.delete", row.original.itemId))}
                                                 >
                                                     <div className="flex flex-row items-center gap-1 text-sm">
                                                         <IconFolderBolt size={15} />
@@ -316,6 +319,44 @@ export function DataTable({ data }: { data: Files_Folders[] }) {
                                                         }
                                                     </div>
                                                 </ContextMenuItem>
+                                                {
+                                                    row.original.isFile && <ContextMenuItem className="cursor-pointer"
+                                                        onClick={() => {
+                                                            axios.post(route("link.generate", row.original.id))
+                                                                .then(e => {
+                                                                    toast(e.data, {
+                                                                        action: {
+                                                                            label: 'Copy',
+                                                                            onClick: () => {
+                                                                                navigator.clipboard.writeText(e.data).then((e) => {
+                                                                                    toast.success("copied to clipboard")
+                                                                                })
+                                                                            }
+                                                                        },
+                                                                    })
+                                                                })
+                                                        }}
+                                                    >
+                                                        <div className="flex flex-row items-center gap-1 text-sm">
+                                                            <IconLink size={15} />
+                                                            <p>Generate Link</p>
+                                                        </div>
+                                                    </ContextMenuItem>
+                                                }
+                                                {
+                                                    row.original.isFile && <ContextMenuItem className="cursor-pointer"
+                                                    >
+                                                        <a
+                                                            href={route("link.download", row.original.id)}
+                                                        >
+                                                            <div className="flex flex-row items-center gap-1 text-sm">
+                                                                <IconDownload size={15} />
+                                                                <p>File Download</p>
+                                                            </div>
+                                                        </a>
+
+                                                    </ContextMenuItem>
+                                                }
                                                 <ContextMenuItem className="cursor-pointer"
                                                     onClick={() => router.delete(route("client.drive.delete", row.original.itemId))}
                                                 >

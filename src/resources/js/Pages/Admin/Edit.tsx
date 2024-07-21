@@ -38,15 +38,17 @@ interface MySpace extends Space {
     write: boolean
 }
 export default function UpdateUser() {
-    const { user, spaces } = usePage<{
+    const { user, spaces, mySpaces } = usePage<{
         user: User,
-        spaces: Space[]
+        spaces: Space[],
+        mySpaces: MySpace[]
     }>().props;
 
     const { data, setData, put, processing, errors } = useForm({
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
+        spaces: mySpaces
     })
 
     const [mySpace, setMySpaces] = useState<MySpace[]>([])
@@ -59,10 +61,21 @@ export default function UpdateUser() {
         setAllSpaces(spaces)
     }, [spaces])
 
+    useEffect(() => {
+        setMySpaces(mySpaces)
+    }, [mySpaces])
+
+
     function submit(e: any) {
         e.preventDefault()
+        console.log(data)
         put(route('admin.users.update', user.id))
     }
+
+    useEffect(() => {
+        setData("spaces", mySpace)
+    }, [mySpace])
+
     const appandValue = (item: Space) => {
         setMySpaces([...mySpace, {
             ...item,
@@ -76,7 +89,6 @@ export default function UpdateUser() {
         setAllSpaces([...allSpaces, item])
         setMySpaces(mySpace.filter(v => v.id != item.id))
     }
-    console.log(mySpace)
     return (
         <ContentLayout title="Create User">
 
@@ -165,13 +177,13 @@ export default function UpdateUser() {
                                                         }
                                                         setMySpaces(items)
                                                     }}
-                                                    id="read"
+                                                    id={"read" + i}
                                                 />
-                                                <Label htmlFor="read">Read</Label>
+                                                <Label htmlFor={"read" + i}>Read</Label>
                                             </div>
                                             <div className="flex items-center space-x-2">
                                                 <Switch
-                                                    id="write"
+                                                    id={"write" + i}
                                                     checked={v.write}
                                                     onCheckedChange={v => {
                                                         let items = [...mySpace]
@@ -182,7 +194,7 @@ export default function UpdateUser() {
                                                         setMySpaces(items)
                                                     }}
                                                 />
-                                                <Label htmlFor="write">Write</Label>
+                                                <Label htmlFor={"write" + i}>Write</Label>
                                             </div>
                                         </CardContent>
                                         <CardFooter>

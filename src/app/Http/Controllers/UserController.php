@@ -65,9 +65,22 @@ class UserController extends Controller
 
     public function update(User $user, UserUpdateRequest $request): RedirectResponse
     {
+        $validation = $request->validated();
+        $spaces = $validation['spaces'];
+        unset($validation['spaces']);
         $user->update(
-            $request->validated()
+            $validation
         );
+        $data = [];
+        if(sizeof($spaces)>0){
+            foreach ($spaces as $space) {
+                $data[$space["id"]] = [
+                    'read'=>$space["read"],
+                    'write'=>$space["write"],
+                ];
+            }
+        }
+        $user->spaces()->sync($data);
 
         return redirect('/admin/users');
     }

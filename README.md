@@ -1,4 +1,3 @@
-## Environment Setup for the Latest Version of Laravel (PHP, Nginx, Laravel, MySql) Using Docker
 
 ### Project Structure
 
@@ -47,7 +46,7 @@
 - You can verify if the project is working by opening the browser. For example, if it’s set to 80:
 
   ```
-  http://localhost
+  http://localhost/login
   ```
 
 - Start node server for the react app
@@ -94,3 +93,5 @@
   docker compose run --rm php /bin/sh
   chown -R laravel:laravel /var/www/html
   ```
+
+- Thats It ! 
