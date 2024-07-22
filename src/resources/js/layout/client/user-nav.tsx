@@ -1,8 +1,7 @@
 
-import { HardDrive, LayoutGrid, LogOut, Trash2, User } from "lucide-react";
+import { HardDrive, LogOut, Trash2, User as UserIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
@@ -19,10 +18,15 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Link, router, usePage } from "@inertiajs/react";
+import { User } from "@/types";
 
 export function UserNav() {
-  const { props } = usePage()
-  const user = props?.auth?.user ?? {}
+  const { props } = usePage<{
+    auth: {
+      user: User
+    }
+  }>()
+  const user = props.auth.user ?? {}
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
@@ -34,7 +38,7 @@ export function UserNav() {
                 className="rounded-full w-8 h-8 bg-background"
                 size="icon"
               >
-                <User className="w-[1.2rem] h-[1.2rem]" />
+                <UserIcon className="w-[1.2rem] h-[1.2rem]" />
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>

@@ -134,7 +134,7 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
     },
     {
         accessorKey: "size",
-        header: ({ column }) => {
+        header: () => {
             return (
                 <></>
             )
@@ -328,7 +328,7 @@ export function DataTable({ data }: { data: Files_Folders[] }) {
                                                                         action: {
                                                                             label: 'Copy',
                                                                             onClick: () => {
-                                                                                navigator.clipboard.writeText(e.data).then((e) => {
+                                                                                navigator.clipboard.writeText(e.data).then((_) => {
                                                                                     toast.success("copied to clipboard")
                                                                                 })
                                                                             }

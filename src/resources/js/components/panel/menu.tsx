@@ -1,5 +1,5 @@
 
-import { Ellipsis, LogOut } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Group } from "@/lib/menu-list";

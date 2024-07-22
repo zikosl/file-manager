@@ -23,7 +23,7 @@ export default function CreateUser() {
         password: '12345678',
     })
 
-    function submit(e) {
+    function submit(e: any) {
         e.preventDefault()
         post(route('admin.users.store'))
     }

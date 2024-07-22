@@ -1,5 +1,4 @@
 import { ModeToggle } from "@/components/mode-toggle";
-import { UserNav } from "@/components/panel/user-nav";
 import { SheetMenu } from "@/components/panel/sheet-menu";
 import { Group } from "@/lib/menu-list";
 import { ReactNode } from "react";

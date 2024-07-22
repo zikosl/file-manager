@@ -6,23 +6,10 @@ import { ContentLayout } from "@/layout/admin/content-layout";
 import {
     Activity,
     ArrowUpRight,
-    CircleUser,
-    CreditCard,
-    DollarSign,
-    FilesIcon,
-    Menu,
+
     OrbitIcon,
-    Package2,
-    Search,
-    Users,
 } from "lucide-react"
 
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -31,16 +18,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+
 import {
     Table,
     TableBody,
@@ -53,7 +31,7 @@ import {
 import { Link, usePage } from "@inertiajs/react";
 import { Space, User } from "@/types";
 import { Files } from "@/components/folder/table";
-import { IconFiles, IconOctagon, IconUsers } from "@tabler/icons-react";
+import { IconFiles, IconUsers } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { FileIconCustom } from "@/lib/extensions";
 

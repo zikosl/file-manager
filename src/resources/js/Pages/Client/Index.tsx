@@ -25,7 +25,7 @@ import { useForm, usePage } from "@inertiajs/react";
 import { DataTable, Files, Folder } from "@/components/folder/table";
 import { useStore } from "zustand";
 import { useFolderConfig } from "@/hooks/use-folder-config";
-import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { FileUploader } from "@/components/folder/file";
 import { useUploadFile } from "@/hooks/use-upload-file";
 import { Files_Folders } from "@/types";
@@ -103,7 +103,7 @@ export function DialogUploader({ open, setOpen }: { open: boolean, setOpen: Disp
         folder_id: number
     }>().props
 
-    const [files, setFiles] = useState<File[]>([])
+    const [_, setFiles] = useState<File[]>([])
     const { uploadFiles, progresses, isUploading } = useUploadFile(
         route("client.drive.file.store"),
         folder_id

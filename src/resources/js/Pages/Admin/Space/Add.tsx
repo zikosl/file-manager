@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { router, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { useMemo } from "react";
 

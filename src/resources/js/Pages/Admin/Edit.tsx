@@ -252,7 +252,7 @@ export function SpaceList(
                                     <CommandItem
                                         key={i}
                                         value={item.name}
-                                        onSelect={(value) => {
+                                        onSelect={() => {
                                             appendValue(item)
                                             setOpen(false)
                                         }}

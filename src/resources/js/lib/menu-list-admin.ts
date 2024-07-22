@@ -2,7 +2,6 @@ import {
   LucideIcon,
   LayoutDashboard,
   Users,
-  Space,
   Orbit
 } from "lucide-react";
 

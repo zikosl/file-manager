@@ -12,7 +12,7 @@ import { Link } from "@inertiajs/react";
 import { Group } from "@/lib/menu-list";
 
 interface SheetMenuProps {
-  menuList: Group;
+  menuList: Group[];
 }
 
 export function SheetMenu({ menuList }: SheetMenuProps) {

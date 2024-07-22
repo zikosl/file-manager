@@ -8,8 +8,8 @@ import { Toaster } from "@/components/ui/sonner"
 createInertiaApp({
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.tsx', { eager: true })
-        let page = pages[`./Pages/${name}.tsx`]
-        page.default.layout = (page) => {
+        let page: any = pages[`./Pages/${name}.tsx`]
+        page.default.layout = (page: any) => {
             if (name.startsWith('Client/')) {
                 return <ClientLayout children={page} />
             }

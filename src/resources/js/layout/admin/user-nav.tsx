@@ -18,10 +18,15 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Link, router, usePage } from "@inertiajs/react";
+import { User } from "@/types";
 
 export function UserNav() {
-  const { props } = usePage()
-  const user = props?.auth?.user ?? {}
+  const { props } = usePage<{
+    auth: {
+      user: User
+    }
+  }>()
+  const user = props.auth.user ?? {}
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
