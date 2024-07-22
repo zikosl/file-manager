@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\CheckUserRole;
 use App\Providers\AppServiceProvider;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // $middleware->redirectUsersTo(AppServiceProvider::ADMIN_HOME);
         // $middleware->redirectUsersTo(AppServiceProvider::CLIENT_HOME);
         $middleware->web(HandleInertiaRequests::class);
+        // $middleware->web(CheckUserRole::class);
         $middleware->throttleApi();
         $middleware->replace(\Illuminate\Http\Middleware\TrustProxies::class, \App\Http\Middleware\TrustProxies::class);
     })

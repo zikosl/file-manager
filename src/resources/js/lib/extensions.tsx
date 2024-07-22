@@ -38,6 +38,18 @@ export function FileIconCustom({ extension }: { extension: string }): ReactNode 
       glyphColor="rgba(255,255,255,0.6)"
     />
   }
+  else if (extension.startsWith("pdf")) {
+    return <FileIcon
+      // size={48}
+      color="#f81253"
+      gradientColor="#ff3b55"
+      gradientOpacity={1}
+      fold={false}
+      radius={6}
+      type="acrobat"
+      glyphColor="rgba(255,255,255,0.6)"
+    />
+  }
 
   else if (extension == "mp4" || extension == "avi" || extension == "mov" || extension == "mkv") {
     return <FileIcon

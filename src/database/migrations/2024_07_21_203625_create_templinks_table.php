@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('templinks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->timestamp('expired_at')->default(now()->addDay());
+            $table->timestamp('expired_at')->default(now()->addDays(1));
             $table->foreignId('file_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
