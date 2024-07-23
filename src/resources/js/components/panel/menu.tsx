@@ -1,5 +1,5 @@
 
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, FilePlus, FolderPlus } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Group } from "@/lib/menu-list";
@@ -13,6 +13,10 @@ import {
   TooltipProvider
 } from "@/components/ui/tooltip";
 import { Link } from "@inertiajs/react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { DialogUploader } from "../dialogs/file";
+import { AddFolderDialog } from "../dialogs/folder";
+import { useState } from "react";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -21,6 +25,8 @@ interface MenuProps {
 
 export function Menu({ isOpen, menuList }: MenuProps) {
 
+  const [upload, setUpload] = useState(false)
+  const [folder, setFolder] = useState(false)
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
@@ -52,40 +58,64 @@ export function Menu({ isOpen, menuList }: MenuProps) {
                 ({ href, label, icon: Icon, active, submenus }, index) =>
                   submenus.length === 0 ? href === "Add" ? (
                     <div className="w-full" key={index}>
-                      <TooltipProvider disableHoverableContent>
-                        <Tooltip delayDuration={100}>
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant={"default"}
-                              className="w-full justify-start h-12 mb-1 cursor-pointer rounded-full"
-                              asChild
-                            >
-                              <div >
-                                <span
-                                  className={cn(isOpen === false ? "" : "mr-4")}
+                      <DropdownMenu>
+                        <DropdownMenuTrigger className="w-full">
+                          <TooltipProvider disableHoverableContent>
+                            <Tooltip delayDuration={100}>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  variant={"default"}
+                                  className="w-full justify-start h-12 mb-1 cursor-pointer rounded-full"
+                                  asChild
                                 >
-                                  <Icon size={18} />
-                                </span>
-                                <p
-                                  className={cn(
-                                    "max-w-[200px] truncate text-base font-medium",
-                                    isOpen === false
-                                      ? "-translate-x-96 opacity-0"
-                                      : "translate-x-0 opacity-100"
-                                  )}
-                                >
+                                  <div >
+                                    <span
+                                      className={cn(isOpen === false ? "" : "mr-4")}
+                                    >
+                                      <Icon size={18} />
+                                    </span>
+                                    <p
+                                      className={cn(
+                                        "max-w-[200px] truncate text-base font-medium",
+                                        isOpen === false
+                                          ? "-translate-x-96 opacity-0"
+                                          : "translate-x-0 opacity-100"
+                                      )}
+                                    >
+                                      {label}
+                                    </p>
+                                  </div>
+                                </Button>
+                              </TooltipTrigger>
+                              {isOpen === false && (
+                                <TooltipContent side="right">
                                   {label}
-                                </p>
-                              </div>
-                            </Button>
-                          </TooltipTrigger>
-                          {isOpen === false && (
-                            <TooltipContent side="right">
-                              {label}
-                            </TooltipContent>
-                          )}
-                        </Tooltip>
-                      </TooltipProvider>
+                                </TooltipContent>
+                              )}
+                            </Tooltip>
+                          </TooltipProvider>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem
+                            onClick={() => setUpload(true)}
+                          >
+                            <div className="flex flex-row items-center gap-1 text-sm">
+                              <FilePlus size={15} />
+                              <p>Upload File</p>
+                            </div>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => setFolder(true)}
+                          >
+                            <div className="flex flex-row items-center gap-1 text-sm">
+                              <FolderPlus size={15} />
+                              <p>New Folder</p>
+                            </div>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      <DialogUploader open={upload} setOpen={setUpload} />
+                      <AddFolderDialog open={folder} setOpen={setFolder} />
                     </div>
                   ) :
                     (

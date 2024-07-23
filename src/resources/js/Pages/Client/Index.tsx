@@ -8,27 +8,15 @@ import {
 } from "@/components/ui/context-menu"
 import { FilePlus, FolderPlus } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogPortal,
-    DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useForm, usePage } from "@inertiajs/react";
+
+import { usePage } from "@inertiajs/react";
 import { DataTable, Files, Folder } from "@/components/folder/table";
 import { useStore } from "zustand";
 import { useFolderConfig } from "@/hooks/use-folder-config";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
-import { FileUploader } from "@/components/folder/file";
-import { useUploadFile } from "@/hooks/use-upload-file";
+import { useEffect, useMemo, useState } from "react";
 import { Files_Folders } from "@/types";
+import { DialogUploader } from "@/components/dialogs/file";
+import { AddFolderDialog } from "@/components/dialogs/folder";
 
 export default function Home() {
     const folderPath = useStore(useFolderConfig, (state) => state)
@@ -97,86 +85,4 @@ export default function Home() {
 }
 
 
-export function DialogUploader({ open, setOpen }: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
 
-    const { folder_id } = usePage<{
-        folder_id: number
-    }>().props
-
-    const [_, setFiles] = useState<File[]>([])
-    const { uploadFiles, progresses, isUploading } = useUploadFile(
-        route("client.drive.file.store"),
-        folder_id
-    )
-
-    return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="sm:max-w-xl">
-                <DialogHeader>
-                    <DialogTitle>Upload files</DialogTitle>
-                    <DialogDescription>
-                        Drag and drop your files here or click to browse.
-                    </DialogDescription>
-                </DialogHeader>
-                <FileUploader
-                    maxFiles={8}
-                    maxSize={8 * 1024 * 1024}
-                    onValueChange={setFiles}
-                    progresses={progresses}
-                    onUpload={uploadFiles}
-                    disabled={isUploading}
-                />
-            </DialogContent>
-        </Dialog>
-    )
-}
-
-
-export function AddFolderDialog({ open, setOpen }: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
-    const { folder_id } = usePage<{
-        folder_id: Number
-    }>().props
-
-    const { post, processing, errors, data, setData } = useForm({
-        title: '',
-        folder_id: folder_id
-    })
-    const submit = (e: any) => {
-        e.preventDefault()
-        post(route("client.drive.store"))
-    }
-    return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogPortal>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Create Folder</DialogTitle>
-                        <DialogDescription>
-                            You can create folder by just click on the button below
-                        </DialogDescription>
-                    </DialogHeader>
-                    <form onSubmit={submit}>
-                        <div className="grid gap-4 py-4">
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="name" className="text-right">
-                                    Name
-                                </Label>
-                                <Input
-                                    id="name"
-                                    value={data.title} onChange={e => setData('title', e.target.value)}
-                                    className="col-span-3"
-                                />
-                                {errors.title && <div className='text-red-500 text-sm'>{errors.title}</div>}
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <DialogClose asChild>
-                                <Button type="submit" disabled={processing}>Create Folder</Button>
-                            </DialogClose>
-                        </DialogFooter>
-                    </form>
-                </DialogContent>
-            </DialogPortal>
-        </Dialog>
-    )
-}

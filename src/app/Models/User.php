@@ -54,7 +54,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
         ];
     }
+    public function isAdmin()
+    {
+        return $this->admin === true;
+    }
 
+    public function isUser()
+    {
+        return $this->admin === false;
+    }
     public function resolveRouteBinding($value, $field = null)
     {
         return $this->where($field ?? 'id', $value)->withTrashed()->firstOrFail();
