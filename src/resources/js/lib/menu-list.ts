@@ -60,7 +60,7 @@ export function getMenuList(pathname: string): Group[] {
         {
           href: "/client/spaces",
           label: "My Spaces",
-          active: pathname == "/client/spaces",
+          active: pathname.includes("/client/spaces"),
           icon: IconPlanet,
           submenus: []
         }
