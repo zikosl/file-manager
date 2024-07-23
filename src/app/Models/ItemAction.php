@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Folder;
 use App\Models\File;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ItemAction extends Model
 {
@@ -55,4 +55,8 @@ class ItemAction extends Model
         return $this->hasOne(File::class);
     }
 
+    public function spaces(): BelongsToMany
+    {
+        return $this->belongsToMany(Space::class, 'space_item_action');
+    }
 }

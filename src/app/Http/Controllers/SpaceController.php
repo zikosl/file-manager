@@ -7,15 +7,24 @@ use App\Http\Requests\SpaceStoreRequest;
 use App\Http\Requests\SpaceUpdateRequest;
 use App\Http\Resources\SpaceCollection;
 use App\Http\Resources\SpaceResource;
+use App\Http\Resources\UserSpaceResource;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\FolderCollection;
+use App\Http\Resources\FileCollection;
+use App\Http\Resources\UserSpaceCollection;
+
 use Inertia\Inertia;
 use Inertia\Response;
+
 use App\Models\Space;
 
 class SpaceController extends Controller
 {
+    //Admin
     public function index(): Response
     {
         $spaces = Space::all();
@@ -68,4 +77,7 @@ class SpaceController extends Controller
 
         return Redirect::back()->with('success', 'Space restored.');
     }
+
+    //Client
+   
 }

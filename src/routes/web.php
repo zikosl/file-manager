@@ -8,7 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemActionController;
-
+use App\Http\Controllers\SpaceItemController;
 use Inertia\Inertia;
 
 //Auth
@@ -30,21 +30,26 @@ Route::delete('logout', [LoginController::class,'destroy'])
 
 //Client
 
-//My Drive Routes
-Route::get('client/{folder}/list', [FolderController::class, 'filter'])
-    ->name('client.drive.list')
-    ->middleware('auth');
 
-Route::get('client', [FolderController::class, 'index'])
-->name('client.drive')
-->middleware('auth');
 
-Route::post('client', [FolderController::class, 'store'])
+//Add Folders
+Route::post('client/{id?}', [FolderController::class, 'store'])
     ->name('client.drive.store')
     ->middleware('auth');
 
 
-//Folder Utility
+
+//My Drive Routes
+
+Route::get('client/{folder}/list', [ItemActionController::class, 'filter'])
+->name('client.drive.list')
+->middleware('auth');
+
+Route::get('client', [ItemActionController::class, 'index'])
+->name('client.drive')
+->middleware('auth');
+
+//Folder,File Utility
 
 Route::put('client/{item}/star', [ItemActionController::class, 'started'])
 ->name('client.drive.star')
@@ -56,30 +61,37 @@ Route::delete('client/{item}/delete', [ItemActionController::class, 'deleted'])
 
 
 //Started Folders OR Files 
-Route::get('client/started', [FolderController::class, 'indexStar'])
+Route::get('client/started', [ItemActionController::class, 'indexStar'])
 ->name('client.started')
 ->middleware('auth');
 
 
 //Deleted Folders Or Files
-Route::get('client/trash', [FolderController::class, 'indexTrash'])
+Route::get('client/trash', [ItemActionController::class, 'indexTrash'])
 ->name('client.trash')
 ->middleware('auth');
 
 
-//Shared Folders
-Route::get('client/shared', function () {
-    return Inertia::render('Client/Shared');
-})
-->name('client.shared')
+
+//Spaces Folders
+Route::get('client/spaces/{id?}', [SpaceItemController::class, "index"])
+->name('client.spaces')
 ->middleware('auth');
+
+//spaces sub folders
+Route::get('client/spaces/{id}/{folder}/list', [SpaceItemController::class, 'filter'])
+->name('client.spaces.list')
+->middleware('auth');
+
+
+
 
 
 //Files Utility
 
 //Upload File
 
-Route::post('client/file', [FileController::class, 'upload'])
+Route::post('client/{spc?}/file', [FileController::class, 'upload'])
     ->name('client.drive.file.store')
     ->middleware('auth');
 

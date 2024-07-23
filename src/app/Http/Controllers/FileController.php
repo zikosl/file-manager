@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\File;
 use App\Models\ItemAction;
+use App\Models\Space;
 use App\Models\Templink;
 
 
 class FileController extends Controller
 {
-    public function upload(FileUploadRequest $request, FileUploadService $fileUploadService): JsonResponse
+    public function upload(Space $spc, FileUploadRequest $request, FileUploadService $fileUploadService): JsonResponse
     {        
         $user = Auth::user();
         
@@ -24,14 +25,15 @@ class FileController extends Controller
         $file = $validation['file'];
         $fileName = $file->getClientOriginalName();
         $fileSize = $file->getSize();
-        $fileMimeType = $file->getMimeType();
-        $fileExtension = $file->getClientOriginalExtension();
 
         $filePath = $fileUploadService->uploadFile($file);
         
         error_log($filePath);
-
         $item = ItemAction::create([]);
+
+        if(isset($spc)){
+            $item->spaces()->attach($spc->id);
+        }
         
         $user->files()->create([
             'name'=>$fileName,

@@ -26,7 +26,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Link, router, usePage } from "@inertiajs/react"
+import { router, usePage } from "@inertiajs/react"
 import { IconArrowBack, IconDownload, IconFolder, IconFolderBolt, IconFolderMinus, IconFolderStar, IconLink, IconStarFilled } from "@tabler/icons-react"
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { useFolderConfig } from "@/hooks/use-folder-config"
@@ -35,6 +35,7 @@ import { Files_Folders } from "@/types"
 import { FileIconCustom } from "@/lib/extensions"
 import axios from "axios"
 import { toast } from "sonner"
+import { Space } from "@/data/schema"
 
 
 
@@ -105,12 +106,11 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
                     }
                     <span className="text-md">{row.getValue("name")}</span>
                     {(!noStar && row.original.started) ? <IconStarFilled className="text-yellow-500" size={16} /> : ""}
-                </div> : <Link href={route("client.drive.list", row.original.id)}>
-                    <div className="lowercase text-gray-700 dark:text-white flex gap-3 items-center">
-                        {!noStar && row.original.started ? <IconFolderStar className="text-yellow-500" size={16} /> : <IconFolder size={16} />}
-                        <span className="text-md">{row.getValue("name")}</span>
-                    </div>
-                </Link>
+                </div> :
+                <div className="lowercase text-gray-700 dark:text-white flex gap-3 items-center">
+                    {!noStar && row.original.started ? <IconFolderStar className="text-yellow-500" size={16} /> : <IconFolder size={16} />}
+                    <span className="text-md">{row.getValue("name")}</span>
+                </div>
         }
     },
     {
@@ -180,11 +180,12 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
         },
     },
 */
-export function DataTable({ data }: { data: Files_Folders[] }) {
+export function DataTable({ data, children }: { data: Files_Folders[], children?: React.ReactNode }) {
 
-    const { parent, folder_id } = usePage<{
+    const { parent, folder_id, space } = usePage<{
         folder_id: Number | null,
-        parent: Number | null
+        parent: Number | null,
+        space: Space
     }>().props
 
     const folderPath = useStore(useFolderConfig, (state) => state)
@@ -226,7 +227,9 @@ export function DataTable({ data }: { data: Files_Folders[] }) {
                     }
                     className="max-w-sm"
                 />
-
+                {
+                    children
+                }
             </div>
             <div className="rounded-md border-0">
                 <Table >
@@ -251,27 +254,44 @@ export function DataTable({ data }: { data: Files_Folders[] }) {
                     <TableBody className="border-0">
                         <TableRow
                             className="border-0 cursor-pointer"
+                            onClick={() => {
+                                if (folderPath.router == "spaces") {
+                                    if (parent) {
+                                        router.get(route("client.spaces.list", [space.id, parent]))
+                                    }
+                                    else {
+                                        router.get(route("client.spaces", space.id))
+                                    }
+                                }
+                                else {
+                                    if (parent) {
+                                        router.get(route("client.drive.list", parent))
+                                    }
+                                    else {
+                                        router.get(route("client.drive"))
+                                    }
+                                }
+                            }}
                         >
                             {
                                 folder_id != null && <TableCell
                                     colSpan={2}
                                 >
-                                    <Link href={parent == null ? route("client.drive") : route("client.drive.list", parent)}>
-                                        <div className="lowercase text-gray-500 dark:text-white flex gap-3 items-center">
-                                            <IconArrowBack size={15} />
-                                            <span className="text-md text-gray-500 dark:text-white">{"Go back"}</span>
-                                        </div>
-                                    </Link>
+                                    <div className="lowercase text-gray-500 dark:text-white flex gap-3 items-center">
+                                        <IconArrowBack size={15} />
+                                        <span className="text-md text-gray-500 dark:text-white">{"Go back"}</span>
+                                    </div>
                                 </TableCell>
                             }
 
                         </TableRow>
                         {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows.map((row) => folderPath.router != "spaces" ? (
                                 <ContextMenu key={row.id}>
                                     <ContextMenuTrigger
                                         className={`${TableRow.propTypes?.className} select-none table-row border-0 hover:bg-slate-300/10 cursor-pointer`}
                                         key={row.id}
+                                        onClick={() => router.get(route("client.drive.list", row.original.id))}
                                         data-state={row.getIsSelected() && "selected"}
                                     >
 
@@ -297,7 +317,7 @@ export function DataTable({ data }: { data: Files_Folders[] }) {
                                                     </div>
                                                 </ContextMenuItem>
                                                 <ContextMenuItem
-                                                    className="cursor-pointer"
+                                                    className="cursor-not-allowed"
                                                 >
                                                     <div className="flex flex-row text-destructive items-center gap-1 text-sm">
                                                         <IconFolderMinus size={15} />
@@ -370,7 +390,26 @@ export function DataTable({ data }: { data: Files_Folders[] }) {
 
                                     </ContextMenuContent>
                                 </ContextMenu>
-                            ))
+                            ) : <TableRow
+                                className={`select-none table-row border-0 hover:bg-slate-300/10 cursor-pointer`}
+                                key={row.id}
+                                onContextMenu={(e) => e.preventDefault()}
+                                data-state={row.getIsSelected() && "selected"}
+                                onClick={() => {
+                                    router.get(route("client.spaces.list", [space.id, row.original.id]))
+                                }}
+                            >
+                                {
+                                    row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </TableCell>
+                                    ))
+                                }
+                            </TableRow>)
                         ) : (
                             <TableRow>
                                 <TableCell

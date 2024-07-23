@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Space extends Model
 {
@@ -42,10 +43,15 @@ class Space extends Model
 
     //Relations
 
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
         ->withPivot('read','write');
 
+    }
+
+    public function items()
+    {
+        return $this->belongsToMany(ItemAction::class, 'space_item_action');
     }
 }

@@ -34,7 +34,7 @@ export function useUploadFile(
                 let total = event?.total ?? event.loaded
                 return {
                   ...prev,
-                  [file]: event.loaded / total * 100,
+                  [file.name]: event.loaded / total * 100,
                 }
               })
             }

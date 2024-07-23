@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Folder;
 use App\Models\File;
 use App\Models\Space;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -111,7 +111,7 @@ class User extends Authenticatable
 
     //Relations
 
-    public function folders()
+    public function folders(): HasMany
     {
         return $this->hasMany(Folder::class);
     }

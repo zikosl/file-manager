@@ -25,6 +25,7 @@ import {
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
 import { Link } from "@inertiajs/react";
+import { Icon123 } from "@tabler/icons-react";
 
 type Submenu = {
   href: string;
@@ -33,7 +34,7 @@ type Submenu = {
 };
 
 interface CollapseMenuButtonProps {
-  icon: LucideIcon;
+  icon: LucideIcon | typeof Icon123;
   label: string;
   active: boolean;
   submenus: Submenu[];

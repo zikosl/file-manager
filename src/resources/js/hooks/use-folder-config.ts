@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface useFolderConfigStore {
-  router: "client" | "trash" | "star";
-  setRouter: (value: "client" | "trash" | "star") => void;
+  router: "client" | "trash" | "star" | "spaces";
+  setRouter: (value: "client" | "trash" | "star" | "spaces") => void;
 }
 
 export const useFolderConfig = create(

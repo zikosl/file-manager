@@ -1,8 +1,8 @@
+import { IconPlanet, IconSpace } from "@tabler/icons-react";
 import {
   LucideIcon,
   HardDrive,
   Star,
-  Share2Icon,
   Trash,
   Plus
 } from "lucide-react";
@@ -17,7 +17,7 @@ type Menu = {
   href: string;
   label: string;
   active: boolean;
-  icon: LucideIcon
+  icon: LucideIcon | typeof IconSpace;
   submenus: Submenu[];
 };
 
@@ -58,10 +58,10 @@ export function getMenuList(pathname: string): Group[] {
           submenus: []
         },
         {
-          href: "/client/shared",
-          label: "Shared Drive",
-          active: pathname == "/client/shared",
-          icon: Share2Icon,
+          href: "/client/spaces",
+          label: "My Spaces",
+          active: pathname == "/client/spaces",
+          icon: IconPlanet,
           submenus: []
         }
       ]
