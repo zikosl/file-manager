@@ -28,7 +28,6 @@ class FileController extends Controller
 
         $filePath = $fileUploadService->uploadFile($file);
         
-        error_log($filePath);
         $item = ItemAction::create([]);
 
         if(isset($spc)){

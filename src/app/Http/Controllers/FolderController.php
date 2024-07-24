@@ -21,7 +21,6 @@ class FolderController extends Controller
     {
         $validation = $request->validated();
         $item = ItemAction::create([]);
-        error_log($item);
         if(isset($id['id'])){
             $item->spaces()->attach($id->id);
         }
@@ -30,7 +29,7 @@ class FolderController extends Controller
         ->create(
             $validation
         );
-        if(isset($id)){
+        if(isset($id["id"])){
             if($validation["folder_id"])
             {
                 return redirect('/client/spaces/'.$id->id.'/'.$validation["folder_id"]."/list");

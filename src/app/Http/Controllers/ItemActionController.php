@@ -152,8 +152,6 @@ class ItemActionController extends Controller
             "started"=>!$item->started
         ]);
         
-        // error_log(strval($item->folder));
-        // error_log(strval($item->file));
 
         if($item->folder){
             $folder = $item->folder->folder_id;
