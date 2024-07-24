@@ -12,7 +12,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ArrowDown, ArrowUp, ArrowUp01, ArrowUpDown, Folder, Star, Trash2 } from "lucide-react"
+import { ArrowDown, ArrowUp, ArrowUpDown, Folder, Star, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import dayjs from "dayjs"

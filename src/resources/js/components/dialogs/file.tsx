@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../ui/dia
 import { DialogHeader } from "../ui/dialog"
 
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { useUploadFile } from "@/hooks/use-upload-file"
 import { FileUploader } from "../folder/file"
 import { Space } from "@/data/schema"
