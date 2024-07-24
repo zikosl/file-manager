@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('templinks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->timestamp('expired_at')->default(now()->addDays(1));
+            $table->timestamp('expired_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->foreignId('file_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
