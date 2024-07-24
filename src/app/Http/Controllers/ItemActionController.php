@@ -124,6 +124,7 @@ class ItemActionController extends Controller
       {
           $user = Auth::user();
           $folders = $user->folders()
+          ->with('item_action')
           ->whereRelation('item_action', 'deleted', true)
           ->whereRelation("item_action", function ($query) {
             $query->doesntHave('spaces');
