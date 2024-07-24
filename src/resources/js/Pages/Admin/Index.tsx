@@ -145,14 +145,17 @@ export default function Dashboard() {
                         <CardContent className="grid gap-8">
                             {
                                 files.map((v) => {
-                                    const fileExtension = v.name.split(".")[v.name.split(".").length - 1];
+                                    const name_list = v.name.split(".")
+                                    const fileExtension = name_list.pop() ?? "";
+                                    let name = name_list.join(".");
+                                    name = name.length > 12 ? name.slice(0, 12) + "..." : name;
                                     return <div className="flex items-center gap-4">
                                         <div className="h-7 w-7">
                                             <FileIconCustom extension={fileExtension} />
                                         </div>
                                         <div className="grid gap-1">
                                             <p className="text-sm font-medium leading-none">
-                                                {v.name}
+                                                {name}.{fileExtension}
                                             </p>
                                             <p className="text-sm text-muted-foreground">
                                                 {Math.round(v.size / 1024)} Ko

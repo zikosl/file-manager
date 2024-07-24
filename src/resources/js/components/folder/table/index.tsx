@@ -37,6 +37,7 @@ import axios from "axios"
 import { toast } from "sonner"
 import { Space } from "@/data/schema"
 import { formatBytes } from "@/lib/utils"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 
 
@@ -98,22 +99,40 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
         cell: ({ row }) => {
 
             //Get the file extension
-            const fileExtension = row.original.name.split(".")[row.original.name.split(".").length - 1];
+            const name_list = row.original.name.split(".")
+            let fileExtension = "";
+            if (row.original.isFile) {
+                fileExtension = name_list.pop() ?? "";
+            }
+            let name = name_list.join(".");
+            name = name.length > 24 ? name.slice(0, 24) + "..." : name;
 
-            return row.original.isFile ?
-                <div className="lowercase text-gray-700 dark:text-white flex gap-3 items-center">
-                    {
-                        <div className="lowercase w-4 h-4 flex gap-3 items-center">
-                            <FileIconCustom extension={fileExtension} />
-                        </div>
-                    }
-                    <span className="text-md">{row.getValue("name")}</span>
-                    {(!noStar && row.original.starred) ? <IconStarFilled className="text-yellow-500" size={16} /> : ""}
-                </div> :
-                <div className="lowercase text-gray-700 dark:text-white flex gap-3 items-center">
-                    {!noStar && row.original.starred ? <IconFolderStar className="text-yellow-500" size={16} /> : <IconFolder size={16} />}
-                    <span className="text-md">{row.getValue("name")}</span>
-                </div>
+            return (
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            {
+                                row.original.isFile ?
+                                    <div className="lowercase text-gray-700 dark:text-white flex gap-3 items-center">
+                                        {
+                                            <div className="lowercase w-4 h-4 flex gap-3 items-center">
+                                                <FileIconCustom extension={fileExtension} />
+                                            </div>
+                                        }
+                                        <span className="text-md">{name}.{fileExtension}</span>
+                                        {(!noStar && row.original.starred) ? <IconStarFilled className="text-yellow-500" size={16} /> : ""}
+                                    </div> :
+                                    <div className="lowercase text-gray-700 dark:text-white flex gap-3 items-center">
+                                        {!noStar && row.original.starred ? <IconFolderStar className="text-yellow-500" size={16} /> : <IconFolder size={16} />}
+                                        <span className="text-md">{name}</span>
+                                    </div>
+                            }
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>{row.original.name}</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>)
         }
     },
     {
