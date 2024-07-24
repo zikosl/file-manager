@@ -20,7 +20,7 @@ class ItemAction extends Model
      */
     protected $fillable = [
         'deleted',
-        'started'
+        'starred'
     ];
 
     /**

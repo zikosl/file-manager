@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('item_actions', function (Blueprint $table) {
             $table->id();
-            $table->boolean('started')->default(false);
+            $table->boolean('starred')->default(false);
             $table->boolean('deleted')->default(false);
             $table->timestamps();
         });

@@ -95,7 +95,7 @@ class ItemActionController extends Controller
   
           $folders = $user->folders()
           ->with('item_action')
-          ->whereRelation('item_action', 'started', true)
+          ->whereRelation('item_action', 'starred', true)
           ->whereRelation('item_action', 'deleted', false)
           ->whereRelation("item_action", function ($query) {
             $query->doesntHave('spaces');
@@ -105,14 +105,14 @@ class ItemActionController extends Controller
           //Load all files with star
           $files = $user->files()
           ->with('item_action')
-          ->whereRelation('item_action', 'started', true)
+          ->whereRelation('item_action', 'starred', true)
           ->whereRelation('item_action', 'deleted', false)
           ->whereRelation("item_action", function ($query) {
             $query->doesntHave('spaces');
             })
           ->get();
   
-          return Inertia::render('Client/Started', [
+          return Inertia::render('Client/Starred', [
               'folders' => new FolderCollection($folders),
               "folder_id"=>null,
               "parent"=>null,
@@ -147,10 +147,10 @@ class ItemActionController extends Controller
           ]);
       }
         //Update
-    public function started(ItemAction $item): RedirectResponse
+    public function starred(ItemAction $item): RedirectResponse
     {
         $item->update([
-            "started"=>!$item->started
+            "starred"=>!$item->starred
         ]);
         
 

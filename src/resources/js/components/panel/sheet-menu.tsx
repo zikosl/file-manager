@@ -8,7 +8,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Link } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import { Group } from "@/lib/menu-list";
 
 interface SheetMenuProps {
@@ -16,6 +16,7 @@ interface SheetMenuProps {
 }
 
 export function SheetMenu({ menuList }: SheetMenuProps) {
+  const { url: pathname } = usePage()
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden" asChild>
@@ -30,7 +31,7 @@ export function SheetMenu({ menuList }: SheetMenuProps) {
             variant="link"
             asChild
           >
-            <Link href="/dashboard" className="flex items-center gap-2">
+            <Link href={pathname.includes("client") ? "/client" : "/admin"} className="flex items-center gap-2">
               <HardDriveIcon className="w-6 h-6 mr-1" />
               <h1 className="font-bold text-lg">Uploady</h1>
             </Link>

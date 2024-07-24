@@ -12,7 +12,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, Folder, Star, Trash2 } from "lucide-react"
+import { ArrowDown, ArrowUp, ArrowUp01, ArrowUpDown, Folder, Star, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import dayjs from "dayjs"
@@ -36,6 +36,7 @@ import { FileIconCustom } from "@/lib/extensions"
 import axios from "axios"
 import { toast } from "sonner"
 import { Space } from "@/data/schema"
+import { formatBytes } from "@/lib/utils"
 
 
 
@@ -43,7 +44,7 @@ export type Folder = {
     id: number
     itemId: number
     title: string
-    started: boolean
+    starred: boolean
     created: string
 }
 
@@ -51,7 +52,7 @@ export type Files = {
     id: number
     itemId: number
     name: string
-    started: boolean
+    starred: boolean
     size: number
     created: string
 }
@@ -88,7 +89,9 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Name
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    {
+                        !column.getIsSorted() ? <ArrowUpDown className="ml-2 h-4 w-4" /> : column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />
+                    }
                 </Button>
             )
         },
@@ -105,10 +108,10 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
                         </div>
                     }
                     <span className="text-md">{row.getValue("name")}</span>
-                    {(!noStar && row.original.started) ? <IconStarFilled className="text-yellow-500" size={16} /> : ""}
+                    {(!noStar && row.original.starred) ? <IconStarFilled className="text-yellow-500" size={16} /> : ""}
                 </div> :
                 <div className="lowercase text-gray-700 dark:text-white flex gap-3 items-center">
-                    {!noStar && row.original.started ? <IconFolderStar className="text-yellow-500" size={16} /> : <IconFolder size={16} />}
+                    {!noStar && row.original.starred ? <IconFolderStar className="text-yellow-500" size={16} /> : <IconFolder size={16} />}
                     <span className="text-md">{row.getValue("name")}</span>
                 </div>
         }
@@ -122,7 +125,9 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Created date
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    {
+                        !column.getIsSorted() ? <ArrowUpDown className="ml-2 h-4 w-4" /> : column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />
+                    }
                 </Button>
             )
         },
@@ -134,15 +139,23 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
     },
     {
         accessorKey: "size",
-        header: () => {
+        header: ({ column }) => {
             return (
-                <></>
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Size
+                    {
+                        !column.getIsSorted() ? <ArrowUpDown className="ml-2 h-4 w-4" /> : column.getIsSorted() === "asc" ? <ArrowDown className="ml-2 h-4 w-4" /> : <ArrowUp className="ml-2 h-4 w-4" />
+                    }
+                </Button>
             )
         },
         cell: ({ row }) => {
             return <div className="lowercase text-gray-700 dark:text-white flex gap-3 items-center">
                 {
-                    row.original.isFile && <span className="text-md">{Math.round(parseInt(row.getValue("size")) / 1024)} Kb</span>
+                    row.original.isFile && <span className="text-md">{formatBytes(Number(row.getValue("size")))}</span>
                 }
             </div>
         }
@@ -291,7 +304,11 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                     <ContextMenuTrigger
                                         className={`${TableRow.propTypes?.className} select-none table-row border-0 hover:bg-slate-300/10 cursor-pointer`}
                                         key={row.id}
-                                        onClick={() => router.get(route("client.drive.list", row.original.id))}
+                                        onClick={() => {
+                                            if (!row.original.isFile) {
+                                                router.get(route("client.drive.list", row.original.id))
+                                            }
+                                        }}
                                         data-state={row.getIsSelected() && "selected"}
                                     >
 
@@ -335,7 +352,7 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                     <div className="flex flex-row items-center gap-1 text-sm">
                                                         <Star size={15} />
                                                         {
-                                                            folderPath.router == "star" ? <p>Unstarted Folder</p> : <p>{row.original.started ? "Uns" : "S"}tarted Folder</p>
+                                                            folderPath.router == "star" ? <p>Unstar Folder</p> : <p>{row.original.starred ? "Uns" : "S"}tar {row.original.isFile ? "File" : "Folder"}</p>
                                                         }
                                                     </div>
                                                 </ContextMenuItem>
@@ -382,7 +399,7 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                 >
                                                     <div className="flex flex-row items-center gap-1 text-sm">
                                                         <Trash2 size={15} />
-                                                        <p>Delete Folder</p>
+                                                        <p>Delete {row.original.isFile ? "File" : "Folder"}</p>
                                                     </div>
                                                 </ContextMenuItem>
                                             </>

@@ -21,7 +21,7 @@ export interface Files_Folders {
   name: string;
   created: string;
   size: number;
-  started: boolean;
+  starred: boolean;
   isFile: boolean;
 }
 

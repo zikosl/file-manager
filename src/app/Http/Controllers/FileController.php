@@ -19,8 +19,8 @@ class FileController extends Controller
 {
     public function upload(Space $spc, FileUploadRequest $request, FileUploadService $fileUploadService): JsonResponse
     {        
+        error_log("txttext");
         $user = Auth::user();
-        
         $validation = $request->validated();
         $file = $validation['file'];
         $fileName = $file->getClientOriginalName();
@@ -56,9 +56,9 @@ class FileController extends Controller
     //Check if the file is expired or not
     public function downloadTemp(Templink $link,Request $request)
     {
-        if ($link->expired_at < now()) {
-            abort(403, 'File Expired');
-        }
+        // if ($link->expired_at < now()) {
+        //     abort(403, 'File Expired');
+        // }
         $file = $link->file;
         return Storage::download($file->path);
     }

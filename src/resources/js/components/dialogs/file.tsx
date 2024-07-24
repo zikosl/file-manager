@@ -1,10 +1,10 @@
 
-import { usePage } from "@inertiajs/react"
+import { router, usePage } from "@inertiajs/react"
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../ui/dialog"
 import { DialogHeader } from "../ui/dialog"
 
 
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useUploadFile } from "@/hooks/use-upload-file"
 import { FileUploader } from "../folder/file"
 import { Space } from "@/data/schema"
@@ -24,7 +24,12 @@ export function DialogUploader({ open, setOpen }: { open: boolean, setOpen: Disp
     )
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={(e) => {
+            if (!e) {
+                router.reload()
+            }
+            setOpen(e)
+        }}>
             <DialogContent className="sm:max-w-xl">
                 <DialogHeader>
                     <DialogTitle>Upload files</DialogTitle>
@@ -34,7 +39,7 @@ export function DialogUploader({ open, setOpen }: { open: boolean, setOpen: Disp
                 </DialogHeader>
                 <FileUploader
                     maxFiles={8}
-                    maxSize={8 * 1024 * 1024}
+                    maxSize={25 * 1024 * 1024}
                     onValueChange={setFiles}
                     progresses={progresses}
                     onUpload={uploadFiles}

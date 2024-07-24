@@ -19,7 +19,7 @@ class FileCollection extends ResourceCollection
             'name' => $folder->name,
             'size' => $folder->size,
             'created' => $folder->created,
-            'started' => $folder->item_action->started,
+            'starred' => $folder->item_action->starred,
             'itemId' => $folder->item_action->id,
         ]);
     }

@@ -17,7 +17,7 @@ class SpaceFolderCollection extends ResourceCollection
         return $this->collection->map(fn ($item) => [
             'id' => $item->folder->id,
             'title' => $item->folder->title,
-            'started' => $item->started,
+            'starred' => $item->starred,
             'created' => $item->folder->created,
             'itemId' => $item->id
         ]);

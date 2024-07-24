@@ -60,13 +60,13 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link href="/dashboard" className="flex items-center">
+            <Link href="/client" className="flex items-center">
               <HardDrive className="w-4 h-4 mr-3 text-muted-foreground" />
               My Drive
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link href="/account" className="flex items-center">
+            <Link href="client/trash" className="flex items-center">
               <Trash2 className="w-4 h-4 mr-3 text-muted-foreground" />
               Trash
             </Link>

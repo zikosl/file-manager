@@ -36,7 +36,7 @@ export default function Home() {
             id: v.id,
             itemId: v.itemId,
             name: v.title,
-            started: v.started,
+            starred: v.starred,
             isFile: false,
             size: 0,
             created: v.created
@@ -46,7 +46,7 @@ export default function Home() {
             id: v.id,
             itemId: v.itemId,
             name: v.name,
-            started: v.started,
+            starred: v.starred,
             isFile: true,
             size: v.size,
             created: v.created

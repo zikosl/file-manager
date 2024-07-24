@@ -19,7 +19,7 @@ class SpaceFileCollection extends ResourceCollection
             'name' => $item->file->name,
             'size' => $item->file->size,
             'created' => $item->file->created,
-            'started' => $item->started,
+            'starred' => $item->starred,
             'itemId' => $item->id,
         ]);
     }

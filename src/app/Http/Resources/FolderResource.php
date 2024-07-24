@@ -17,7 +17,7 @@ class FolderResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'started'=>$this->started
+            'starred'=>$this->starred
         ];
     }
 }

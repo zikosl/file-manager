@@ -17,7 +17,7 @@ class FolderCollection extends ResourceCollection
         return $this->collection->map(fn ($folder) => [
             'id' => $folder->id,
             'title' => $folder->title,
-            'started' => $folder->item_action->started,
+            'starred' => $folder->item_action->starred,
             'created' => $folder->created,
             'itemId' => $folder->item_action->id
         ]);

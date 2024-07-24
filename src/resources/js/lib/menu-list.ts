@@ -51,9 +51,9 @@ export function getMenuList(pathname: string): Group[] {
           submenus: []
         },
         {
-          href: "/client/started",
-          label: "Started",
-          active: pathname == "/client/started",
+          href: "/client/starred",
+          label: "Starred",
+          active: pathname == "/client/starred",
           icon: Star,
           submenus: []
         },

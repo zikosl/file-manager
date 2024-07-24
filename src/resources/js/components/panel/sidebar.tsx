@@ -6,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "@/components/panel/menu";
 import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
 import { SidebarToggle } from "@/components/panel/sidebar-toggle";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Group } from "@/lib/menu-list";
 
 export function Sidebar({ menuList }: { menuList: Group[] }) {
 
   const sidebar = useStore(useSidebarToggle, (state) => state);
+  const { url: pathname } = usePage()
 
   if (!sidebar) return null;
 
@@ -32,7 +33,7 @@ export function Sidebar({ menuList }: { menuList: Group[] }) {
           variant="link"
           asChild
         >
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href={pathname.includes("client") ? "/client" : "/admin"} className="flex items-center gap-2">
             <HardDriveIcon className="w-6 h-6 mr-1" />
             <h1
               className={cn(

@@ -44,9 +44,9 @@ Route::group(['middleware' => ['auth', 'user']], function() {
     Route::get('client/{folder}/list', [ItemActionController::class, 'filter'])
     ->name('client.drive.list');
 
-    //Started Folders OR Files 
-    Route::get('client/started', [ItemActionController::class, 'indexStar'])
-    ->name('client.started');
+    //Starred Folders OR Files 
+    Route::get('client/starred', [ItemActionController::class, 'indexStar'])
+    ->name('client.starred');
 
 
     //Deleted Folders Or Files
@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth', 'user']], function() {
 
     //Folder,File Utility
 
-    Route::put('client/{item}/star', [ItemActionController::class, 'started'])
+    Route::put('client/{item}/star', [ItemActionController::class, 'starred'])
     ->name('client.drive.star');
 
     Route::delete('client/{item}/delete', [ItemActionController::class, 'deleted'])
