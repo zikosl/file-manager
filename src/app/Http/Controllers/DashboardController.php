@@ -25,9 +25,12 @@ class DashboardController extends Controller
     public function index(): Response
     {
         $users = User::where("admin","=","false")
+        ->latest()
         ->get();
-        $spaces = Space::all();
-        $files = File::all();
+        $spaces = Space::latest()
+        ->get();
+        $files = File::latest()
+        ->get();
         return Inertia::render('Admin/Index', [
             'users' => new UserCollection($users),
             'spaces'=>new SpaceCollection($spaces),

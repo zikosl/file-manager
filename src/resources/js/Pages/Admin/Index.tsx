@@ -34,6 +34,7 @@ import { Files } from "@/components/folder/table";
 import { IconFiles, IconUsers } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { FileIconCustom } from "@/lib/extensions";
+import { formatBytes } from "@/lib/utils";
 
 export default function Dashboard() {
     const { users, spaces, files, auth } = usePage<{
@@ -92,7 +93,7 @@ export default function Dashboard() {
                     </Card>
 
                 </div>
-                <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+                <div className="flex-1 grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                     <Card
                         className="xl:col-span-2" x-chunk="dashboard-01-chunk-4"
                     >
@@ -122,7 +123,7 @@ export default function Dashboard() {
                                 </TableHeader>
                                 <TableBody>
                                     {
-                                        users.map((v, i) => <TableRow key={i}>
+                                        users.slice(0, 6).map((v, i) => <TableRow key={i}>
                                             <TableCell>
                                                 <div className="font-medium">{v.name}</div>
                                                 <div className="hidden text-sm text-muted-foreground md:inline">
@@ -142,9 +143,10 @@ export default function Dashboard() {
                         <CardHeader>
                             <CardTitle>Recent Files</CardTitle>
                         </CardHeader>
-                        <CardContent className="grid gap-8">
+                        <CardContent className="grid gap-8 ">
+                            {/* <ScrollArea> */}
                             {
-                                files.map((v) => {
+                                files.slice(0, 6).map((v) => {
                                     const name_list = v.name.split(".")
                                     const fileExtension = name_list.pop() ?? "";
                                     let name = name_list.join(".");
@@ -158,12 +160,13 @@ export default function Dashboard() {
                                                 {name}.{fileExtension}
                                             </p>
                                             <p className="text-sm text-muted-foreground">
-                                                {Math.round(v.size / 1024)} Ko
+                                                {formatBytes(v.size)}
                                             </p>
                                         </div>
                                     </div>
                                 })
                             }
+                            {/* </ScrollArea> */}
                         </CardContent>
                     </Card>
                 </div>
