@@ -35,6 +35,7 @@ import { IconFiles, IconUsers } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { FileIconCustom } from "@/lib/extensions";
 import { formatBytes } from "@/lib/utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Dashboard() {
     const { users, spaces, files, auth } = usePage<{
@@ -47,7 +48,7 @@ export default function Dashboard() {
     }>().props
     return (
         <ContentLayout title="Dashboard">
-            <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+            <main className=" h-full flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
                 <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                     <Card x-chunk="dashboard-01-chunk-3">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -112,38 +113,40 @@ export default function Dashboard() {
                             </Button>
                         </CardHeader>
                         <CardContent>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Users</TableHead>
-                                        <TableHead className="hidden md:table-cell">
-                                            Date
-                                        </TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {
-                                        users.slice(0, 6).map((v, i) => <TableRow key={i}>
-                                            <TableCell>
-                                                <div className="font-medium">{v.name}</div>
-                                                <div className="hidden text-sm text-muted-foreground md:inline">
-                                                    {v.email}
-                                                </div>
-                                            </TableCell>
-                                            <TableCell className="hidden md:table-cell">
-                                                {dayjs().format("DD, MMM YYYY")}
-                                            </TableCell>
-                                        </TableRow>)
-                                    }
-                                </TableBody>
-                            </Table>
+                            <ScrollArea>
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Users</TableHead>
+                                            <TableHead className="hidden md:table-cell">
+                                                Date
+                                            </TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {
+                                            users.slice(0, 6).map((v, i) => <TableRow key={i}>
+                                                <TableCell>
+                                                    <div className="font-medium">{v.name}</div>
+                                                    <div className="hidden text-sm text-muted-foreground md:inline">
+                                                        {v.email}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="hidden md:table-cell">
+                                                    {dayjs().format("DD, MMM YYYY")}
+                                                </TableCell>
+                                            </TableRow>)
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </ScrollArea>
                         </CardContent>
                     </Card>
                     <Card x-chunk="dashboard-01-chunk-5">
                         <CardHeader>
                             <CardTitle>Recent Files</CardTitle>
                         </CardHeader>
-                        <CardContent className="grid gap-8 ">
+                        <CardContent className="grid gap-8 overflow-y-scroll">
                             {/* <ScrollArea> */}
                             {
                                 files.slice(0, 6).map((v) => {

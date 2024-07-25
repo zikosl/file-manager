@@ -14,16 +14,18 @@ import { DataTable, Files, Folder } from "@/components/folder/table";
 import { useStore } from "zustand";
 import { useFolderConfig } from "@/hooks/use-folder-config";
 import { useEffect, useMemo, useState } from "react";
-import { Files_Folders } from "@/types";
+import { Files_Folders, MySpace } from "@/types";
 import { SpacesTools } from "@/components/spaces-tools";
 import { DialogUploader } from "@/components/dialogs/file";
 import { AddFolderDialog } from "@/components/dialogs/folder";
+import { toast } from "sonner";
 
 export default function Home() {
     const folderPath = useStore(useFolderConfig, (state) => state)
-    const { folders, files } = usePage<{
+    const { folders, files, space } = usePage<{
         folders: Folder[],
-        files: Files[]
+        files: Files[],
+        space: MySpace
     }>().props
     console.log(files, folders)
     const [isOpen, setIsOpen] = useState(false)
@@ -58,31 +60,42 @@ export default function Home() {
 
     return (
         <ContentLayout title="My Spaces" >
-            <ContextMenu>
-                <ContextMenuTrigger className="flex-1 flex">
-                    <div className="flex flex-1 pt-8 pb-8 px-4 sm:px-8">
+            {
+                space.write ? <>
+                    <ContextMenu>
+                        <ContextMenuTrigger className="flex-1 flex">
+                            <div className="flex flex-1 pt-8 pb-8 px-4 sm:px-8">
+                                <DataTable data={data}>
+                                    <SpacesTools />
+                                </DataTable>
+                            </div>
+                        </ContextMenuTrigger>
+                        <ContextMenuContent>
+                            <ContextMenuItem onClick={() => { setIsUploadOpen(true) }} className="cursor-pointer">
+                                <div className="flex flex-row items-center gap-1 text-sm" >
+                                    <FilePlus size={15} />
+                                    <p>Upload File</p>
+                                </div>
+                            </ContextMenuItem>
+                            <ContextMenuItem onClick={() => { setIsOpen(true) }} className="cursor-pointer">
+                                <div className="flex flex-row items-center gap-1 text-sm">
+                                    <FolderPlus size={15} />
+                                    <p>New Folder</p>
+                                </div>
+                            </ContextMenuItem>
+                        </ContextMenuContent>
+                    </ContextMenu>
+                    <DialogUploader open={isUploadOpen} setOpen={setIsUploadOpen} />
+                    <AddFolderDialog open={isOpen} setOpen={setIsOpen} />
+                </> : <>
+                    <div className="flex flex-1 pt-8 pb-8 px-4 sm:px-8" onContextMenu={(e) => { e.preventDefault(); toast.warning("You are limited to viewing in this area.", { duration: 1000 }) }}>
                         <DataTable data={data}>
                             <SpacesTools />
                         </DataTable>
                     </div>
-                </ContextMenuTrigger>
-                <ContextMenuContent>
-                    <ContextMenuItem onClick={() => { setIsUploadOpen(true) }} className="cursor-pointer">
-                        <div className="flex flex-row items-center gap-1 text-sm">
-                            <FilePlus size={15} />
-                            <p>Upload File</p>
-                        </div>
-                    </ContextMenuItem>
-                    <ContextMenuItem onClick={() => { setIsOpen(true) }} className="cursor-pointer">
-                        <div className="flex flex-row items-center gap-1 text-sm">
-                            <FolderPlus size={15} />
-                            <p>New Folder</p>
-                        </div>
-                    </ContextMenuItem>
-                </ContextMenuContent>
-            </ContextMenu>
-            <DialogUploader open={isUploadOpen} setOpen={setIsUploadOpen} />
-            <AddFolderDialog open={isOpen} setOpen={setIsOpen} />
+                </>
+            }
+
         </ContentLayout>
     )
 }

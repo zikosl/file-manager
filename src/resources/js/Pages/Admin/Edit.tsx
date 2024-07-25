@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useForm, usePage } from "@inertiajs/react";
-import { Space, User } from '@/types';
+import { MySpace, Space, User } from '@/types';
 import { Switch } from "@/components/ui/switch";
 import { useEffect, useState } from "react";
 
@@ -33,10 +33,6 @@ import {
 import { IconPlus } from "@tabler/icons-react";
 
 
-interface MySpace extends Space {
-    read: boolean
-    write: boolean
-}
 export default function UpdateUser() {
     const { user, spaces, mySpaces } = usePage<{
         user: User,

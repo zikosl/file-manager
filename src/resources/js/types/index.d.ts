@@ -14,7 +14,10 @@ export interface Space {
   color: string;
 }
 
-
+interface MySpace extends Space {
+  read: boolean
+  write: boolean
+}
 export interface Files_Folders {
   id: number;
   itemId: number;
