@@ -4,6 +4,7 @@ import { Table } from '@tanstack/react-table'
 // import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
 import { DataTableViewOptions } from './data-table-view-options'
+import { __ } from '@/lib/lang'
 
 // import { priorities, statuses } from '@/data/data'
 // import { DataTableFacetedFilter } from './data-table-faceted-filter'
@@ -20,7 +21,7 @@ export function DataTableToolbar<TData>({
     <div className='flex items-center justify-between'>
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
-          placeholder='Filter users...'
+          placeholder={__('Filter Users...')}
           value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('name')?.setFilterValue(event.target.value)

@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link, router, usePage } from "@inertiajs/react";
 import { User } from "@/types";
+import { __ } from "@/lib/lang";
 
 export function UserNav() {
   const { props } = usePage<{
@@ -42,13 +43,15 @@ export function UserNav() {
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
-          <TooltipContent side="bottom">Profile</TooltipContent>
+          <TooltipContent side="bottom">
+            {__("Profile")}
+          </TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 rtl:text-right">
             <p className="text-sm font-medium leading-none">
               {user?.name}
             </p>
@@ -60,22 +63,22 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link href="/admin" className="flex items-center">
-              <LayoutDashboard className="w-4 h-4 mr-3 text-muted-foreground" />
-              Dashboard
+            <Link href="/admin" className="flex gap-3 items-center rtl:flex-row-reverse">
+              <LayoutDashboard className="w-4 h-4 text-muted-foreground" />
+              {__("Dashboard")}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link href="/admin/users" className="flex items-center">
-              <Users2 className="w-4 h-4 mr-3 text-muted-foreground" />
-              Users
+            <Link href="/admin/users" className="flex gap-3 items-center rtl:flex-row-reverse">
+              <Users2 className="w-4 h-4 text-muted-foreground" />
+              {__("Users")}
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" onClick={() => { router.delete(route("logout")) }}>
-          <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
-          Sign out
+        <DropdownMenuItem className="hover:cursor-pointer gap-3 rtl:flex-row-reverse" onClick={() => { router.delete(route("logout")) }}>
+          <LogOut className="w-4 h-4 text-muted-foreground" />
+          {__("Sign out")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

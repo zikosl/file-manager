@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemActionController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SpaceItemController;
 
 //Auth
@@ -102,6 +103,7 @@ Route::middleware('locale')->group(function() {
 
 
 
+    Route::post('/language', [LanguageController::class, 'store'])->name('language.store');
 
 
     Route::group(['middleware' => ['auth', 'admin']], function() {
@@ -162,5 +164,8 @@ Route::middleware('locale')->group(function() {
 
         Route::put('admin/spaces/{space}/restore', [SpaceController::class, 'restore'])
         ->name('admin.spaces.restore');
+
+
+        //
     });
 });

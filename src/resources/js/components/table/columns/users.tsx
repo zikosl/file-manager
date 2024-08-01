@@ -5,6 +5,7 @@ import { DataTableColumnHeader } from '../data-table-column-header'
 import { DataTableRowActions } from '../actions/users'
 
 import { User } from '@/data/schema'
+import { __ } from '@/lib/lang'
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -34,7 +35,7 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='User' />
+      <DataTableColumnHeader column={column} title={__("User")} />
     ),
     cell: ({ row }) => <div className='w-[80px]'>US_{row.getValue('id')}</div>,
     enableSorting: false,
@@ -43,7 +44,7 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Name' />
+      <DataTableColumnHeader column={column} title={__("Name")} />
     ),
     cell: ({ row }) => {
 
@@ -59,7 +60,7 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'email',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Email' />
+      <DataTableColumnHeader column={column} title={__('Email')} />
     ),
     cell: ({ row }) => {
 

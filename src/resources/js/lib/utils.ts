@@ -5,6 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function capitalizeFirstLetter(string) {
+  if (!string) return string; // Check for empty string or null/undefined
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export function formatBytes(
   bytes: number,
   opts: {

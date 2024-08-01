@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/custom/password-input";
 import { useForm } from "@inertiajs/react";
+import { __ } from "@/lib/lang";
 
 
 export default function CreateUser() {
@@ -28,21 +29,23 @@ export default function CreateUser() {
         post(route('admin.users.store'))
     }
     return (
-        <ContentLayout title="Create User">
+        <ContentLayout title={__("Create User")}>
 
             <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0 justify-center'>
                 <form onSubmit={submit}>
                     <Card className="w-full">
                         <CardHeader>
-                            <CardTitle className="text-2xl">Create User</CardTitle>
+                            <CardTitle className="text-2xl">{__("Create User")}</CardTitle>
                             <CardDescription>
-                                Enter user details and submit to create a new user
+                                {__("Enter user details and submit to create a new user")}
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-5">
                             <div className="flex gap-2">
                                 <div className="grid gap-2 flex-1">
-                                    <Label htmlFor="first_name">First Name</Label>
+                                    <Label htmlFor="first_name">
+                                        {__("First Name")}
+                                    </Label>
                                     <Input
                                         id="first_name"
                                         type="text"
@@ -52,7 +55,9 @@ export default function CreateUser() {
                                     {errors.first_name && <div>{errors.first_name}</div>}
                                 </div>
                                 <div className="grid gap-2 flex-1">
-                                    <Label htmlFor="last_name">Last Name</Label>
+                                    <Label htmlFor="last_name">
+                                        {__("Last Name")}
+                                    </Label>
                                     <Input
                                         id="last_name"
                                         type="text"
@@ -63,7 +68,9 @@ export default function CreateUser() {
                                 </div>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">
+                                    {__("Email")}
+                                </Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -73,7 +80,9 @@ export default function CreateUser() {
                                 {errors.email && <div>{errors.email}</div>}
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">
+                                    {__("Password")}
+                                </Label>
                                 <PasswordInput
                                     id="password"
                                     value={data.password} onChange={e => setData('password', e.target.value)}
@@ -82,7 +91,7 @@ export default function CreateUser() {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button disabled={processing} className="ml-auto">Submit</Button>
+                            <Button disabled={processing} className="ltr:ml-auto rtl:mr-auto">{__("Submit")}</Button>
                         </CardFooter>
                     </Card>
                 </form>

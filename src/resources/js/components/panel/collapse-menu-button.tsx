@@ -65,9 +65,9 @@ export function CollapseMenuButton({
           variant={active ? "secondary" : "ghost"}
           className="w-full justify-start h-10"
         >
-          <div className="w-full items-center flex justify-between">
-            <div className="flex items-center">
-              <span className="mr-4">
+          <div className="w-full items-center flex rtl:flex-row-reverse justify-between">
+            <div className="flex items-center rtl:flex-row-reverse">
+              <span className="ltr:mr-4 rtl:ml-4">
                 <Icon size={18} />
               </span>
               <p
@@ -105,8 +105,8 @@ export function CollapseMenuButton({
             className="w-full justify-start h-10 mb-1"
             asChild
           >
-            <Link href={href}>
-              <span className="mr-4 ml-2">
+            <Link href={href} className="rtl:flex-row-reverse">
+              <span className="ltr:mr-4 ltr:ml-2 rtl:mr-2 rtl:ml-4">
                 <Dot size={18} />
               </span>
               <p
@@ -157,7 +157,7 @@ export function CollapseMenuButton({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DropdownMenuContent side="right" sideOffset={25} align="start">
+      <DropdownMenuContent className="rtl:text-right" side="right" sideOffset={25}>
         <DropdownMenuLabel className="max-w-[190px] truncate">
           {label}
         </DropdownMenuLabel>
@@ -165,7 +165,7 @@ export function CollapseMenuButton({
         {submenus.map(({ href, label }, index) => (
           <DropdownMenuItem key={index} asChild>
             <Link className="cursor-pointer" href={href}>
-              <p className="max-w-[180px] truncate">{label}</p>
+              <p className="max-w-[180px] truncate rtl:ml-auto" >{label}</p>
             </Link>
           </DropdownMenuItem>
         ))}

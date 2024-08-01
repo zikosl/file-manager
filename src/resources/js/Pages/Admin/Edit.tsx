@@ -31,6 +31,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { IconPlus } from "@tabler/icons-react";
+import { __ } from "@/lib/lang";
 
 
 export default function UpdateUser() {
@@ -86,21 +87,23 @@ export default function UpdateUser() {
         setMySpaces(mySpace.filter(v => v.id != item.id))
     }
     return (
-        <ContentLayout title="Create User">
+        <ContentLayout title={__("Edit User")}>
 
             <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0 justify-center'>
                 <form onSubmit={submit}>
                     <Card className="w-full">
                         <CardHeader>
-                            <CardTitle className="text-2xl">Update User</CardTitle>
+                            <CardTitle className="text-2xl">
+                                {__("Update User")}
+                            </CardTitle>
                             <CardDescription>
-                                Enter user details and submit to update this user
+                                {__("Enter user details and submit to update this user")}
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-5">
                             <div className="flex gap-2">
                                 <div className="grid gap-2 flex-1">
-                                    <Label htmlFor="first_name">First Name</Label>
+                                    <Label htmlFor="first_name">{__("First Name")}</Label>
                                     <Input
                                         id="first_name"
                                         type="text"
@@ -110,7 +113,7 @@ export default function UpdateUser() {
                                     {errors.first_name && <div className='text-red-500 text-sm'>{errors.first_name}</div>}
                                 </div>
                                 <div className="grid gap-2 flex-1">
-                                    <Label htmlFor="last_name">Last Name</Label>
+                                    <Label htmlFor="last_name">{__("Last Name")}</Label>
                                     <Input
                                         id="last_name"
                                         type="text"
@@ -121,7 +124,7 @@ export default function UpdateUser() {
                                 </div>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">{__("Email")}</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -133,7 +136,7 @@ export default function UpdateUser() {
 
                             {/* Process Spaces Related to user */}
                             <div className="flex items-center gap-4">
-                                <Label>Spaces</Label>
+                                <Label>{__("Spaces")}</Label>
                                 <SpaceList
                                     data={allSpaces}
                                     open={open}
@@ -151,7 +154,7 @@ export default function UpdateUser() {
                                     </Button>
                                 </SpaceList>
                             </div>
-                            <div className="grid grid-cols-4 gap-3">
+                            <div className="grid grid-cols-3 lg:grid-cols-4 gap-3">
                                 {
                                     mySpace.map((v, i) => <Card key={i} className="w-64">
                                         <CardHeader>
@@ -162,8 +165,9 @@ export default function UpdateUser() {
                                             </div>
                                         </CardHeader>
                                         <CardContent className="flex flex-col gap-3">
-                                            <div className="flex items-center space-x-2">
+                                            <div className="flex items-center gap-2">
                                                 <Switch
+                                                    dir="ltr"
                                                     checked={v.read}
                                                     onCheckedChange={v => {
                                                         let items = [...mySpace]
@@ -175,10 +179,11 @@ export default function UpdateUser() {
                                                     }}
                                                     id={"read" + i}
                                                 />
-                                                <Label htmlFor={"read" + i}>Read</Label>
+                                                <Label htmlFor={"read" + i}>{__("Read")}</Label>
                                             </div>
-                                            <div className="flex items-center space-x-2">
+                                            <div className="flex items-center gap-2">
                                                 <Switch
+                                                    dir="ltr"
                                                     id={"write" + i}
                                                     checked={v.write}
                                                     onCheckedChange={v => {
@@ -190,17 +195,17 @@ export default function UpdateUser() {
                                                         setMySpaces(items)
                                                     }}
                                                 />
-                                                <Label htmlFor={"write" + i}>Write</Label>
+                                                <Label htmlFor={"write" + i}>{__("Write")}</Label>
                                             </div>
                                         </CardContent>
                                         <CardFooter>
                                             <Button
                                                 size="sm"
-                                                className="ml-auto"
+                                                className="ltr:ml-auto rtl:mr-auto"
                                                 type="button"
                                                 onClick={() => removeValue(v)}
                                             >
-                                                Delete
+                                                {__("Delete")}
                                             </Button>
                                         </CardFooter>
                                     </Card>)
@@ -209,7 +214,7 @@ export default function UpdateUser() {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button disabled={processing} className="ml-auto">Submit</Button>
+                            <Button disabled={processing} className="ml-auto">{__("Submit")}</Button>
                         </CardFooter>
                     </Card>
                 </form>

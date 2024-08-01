@@ -6,6 +6,7 @@ import { DataTableRowActions } from '../actions/spaces'
 
 import { Space } from '@/data/schema'
 import { Badge } from '@/components/ui/badge'
+import { __ } from '@/lib/lang'
 
 export const columns: ColumnDef<Space>[] = [
   {
@@ -51,7 +52,7 @@ export const columns: ColumnDef<Space>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Name' />
+      <DataTableColumnHeader column={column} title={__("Name")} />
     ),
     cell: ({ row }) => {
 

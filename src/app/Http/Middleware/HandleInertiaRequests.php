@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                     'error' => $request->session()->get('error'),
                 ];
             },
+            'language' => fn () => translations(base_path('lang/' . app()->getLocale() . '.json')),
         ]);
     }
 }

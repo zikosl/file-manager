@@ -4,6 +4,7 @@ import {
   Users,
   Orbit
 } from "lucide-react";
+import { __ } from "./lang";
 
 type Submenu = {
   href: string;
@@ -27,47 +28,47 @@ type Group = {
 export function getMenuList(pathname: string): Group[] {
   return [
     {
-      groupLabel: "Main",
+      groupLabel: __("Main"),
       menus: [
         {
           href: "/admin",
-          label: "Dashboard",
+          label: __("Dashboard"),
           active: pathname == "/admin",
           icon: LayoutDashboard,
           submenus: []
         },
         {
           href: "",
-          label: "Users",
+          label: __("Users"),
           active: pathname.includes("/admin/users"),
           icon: Users,
           submenus: [
             {
               href: "/admin/users",
-              label: "All Users",
+              label: __("All Users"),
               active: pathname === "/admin/users"
             },
             {
               href: "/admin/users/create",
-              label: "New User",
+              label: __("New User"),
               active: pathname === "/admin/users/create"
             }
           ]
         },
         {
           href: "",
-          label: "Spaces",
+          label: __("Spaces"),
           active: pathname.includes("/admin/spaces"),
           icon: Orbit,
           submenus: [
             {
               href: "/admin/spaces",
-              label: "All spaces",
+              label: __("All spaces"),
               active: pathname === "/admin/spaces"
             },
             {
               href: "/admin/spaces/create",
-              label: "New Space",
+              label: __("New Space"),
               active: pathname === "/admin/spaces/create"
             }
           ]

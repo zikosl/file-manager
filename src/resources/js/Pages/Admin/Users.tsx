@@ -2,6 +2,7 @@ import { columns } from "@/components/table/columns/users";
 import { DataTable } from "@/components/table/data-table";
 import { User } from "@/data/schema";
 import { ContentLayout } from "@/layout/admin/content-layout";
+import { __ } from "@/lib/lang";
 import { usePage } from "@inertiajs/react";
 
 export default function Users() {
@@ -12,12 +13,14 @@ export default function Users() {
         }
     >().props
     return (
-        <ContentLayout title="Users">
+        <ContentLayout title={__("Users")}>
             <div className='mb-2 flex items-center justify-between space-y-2'>
                 <div>
-                    <h2 className='text-2xl font-bold tracking-tight'>Users List</h2>
-                    <p className='text-muted-foreground'>
-                        Here&apos;s a list of all users
+                    <h2 className='text-2xl font-bold tracking-tight'>
+                        {__("Users List")}
+                    </h2>
+                    < p className='text-muted-foreground' >
+                        {__("Here's a list of all users")}
                     </p>
                 </div>
             </div>

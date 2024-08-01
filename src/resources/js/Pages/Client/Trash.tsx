@@ -7,6 +7,7 @@ import { useFolderConfig } from "@/hooks/use-folder-config";
 import { useStore } from "zustand";
 import { useEffect, useMemo } from "react";
 import { Files_Folders } from "@/types";
+import { __ } from "@/lib/lang";
 
 export default function Trash() {
     const folderPath = useStore(useFolderConfig, (state) => state)
@@ -44,7 +45,7 @@ export default function Trash() {
     }, [])
 
     return (
-        <ContentLayout title="My Drive">
+        <ContentLayout title={__("Trash")}>
             <div className="flex flex-1 pt-8 pb-8 px-4 sm:px-8">
                 <DataTable data={data} />
             </div>

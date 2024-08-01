@@ -14,6 +14,7 @@ import { useForm, usePage } from "@inertiajs/react";
 import { Space } from '@/types';
 import { ColorPicker } from "@/components/ui/color-picker";
 import { useMemo } from "react";
+import { __ } from "@/lib/lang";
 
 
 export default function UpdateSpace() {
@@ -36,21 +37,25 @@ export default function UpdateSpace() {
     }, [data.color])
 
     return (
-        <ContentLayout title="Create Space">
+        <ContentLayout title={__("Edit Space")}>
 
             <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0 justify-center'>
                 <form onSubmit={submit}>
                     <Card className="w-full">
                         <CardHeader>
-                            <CardTitle className="text-2xl">Update Space</CardTitle>
+                            <CardTitle className="text-2xl">
+                                {__("Update Space")}
+                            </CardTitle>
                             <CardDescription>
-                                Enter space details and submit to update this space
+                                {__("Enter space details and submit to update this space")}
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-5">
                             <div className="flex gap-2">
                                 <div className="grid gap-2 flex-1">
-                                    <Label htmlFor="name">Space Name</Label>
+                                    <Label htmlFor="name">
+                                        {__("Space Name")}
+                                    </Label>
                                     <Input
                                         id="name"
                                         type="text"
@@ -60,7 +65,9 @@ export default function UpdateSpace() {
                                     {errors.name && <div className='text-red-500 text-sm'>{errors.name}</div>}
                                 </div>
                                 <div className="grid gap-2 flex-1">
-                                    <Label htmlFor="color">Space Color</Label>
+                                    <Label htmlFor="color">
+                                        {__("Space Color")}
+                                    </Label>
                                     <div className="flex gap-2">
                                         <Input
                                             id="color"
@@ -79,7 +86,9 @@ export default function UpdateSpace() {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button disabled={processing} className="ml-auto">Submit</Button>
+                            <Button disabled={processing} className="ml-auto">
+                                {__("Submit")}
+                            </Button>
                         </CardFooter>
                     </Card>
                 </form>

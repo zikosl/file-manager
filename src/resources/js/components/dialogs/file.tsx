@@ -8,6 +8,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { useUploadFile } from "@/hooks/use-upload-file"
 import { FileUploader } from "../folder/file"
 import { Space } from "@/data/schema"
+import { __ } from "@/lib/lang"
 
 
 export function DialogUploader({ open, setOpen }: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
@@ -32,9 +33,11 @@ export function DialogUploader({ open, setOpen }: { open: boolean, setOpen: Disp
         }}>
             <DialogContent className="sm:max-w-xl">
                 <DialogHeader>
-                    <DialogTitle>Upload files</DialogTitle>
+                    <DialogTitle>
+                        {__("Upload files")}
+                    </DialogTitle>
                     <DialogDescription>
-                        Drag and drop your files here or click to browse.
+                        {__("Drag and drop your files here or click to browse.")}
                     </DialogDescription>
                 </DialogHeader>
                 <FileUploader

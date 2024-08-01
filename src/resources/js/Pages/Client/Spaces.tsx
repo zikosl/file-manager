@@ -19,6 +19,7 @@ import { SpacesTools } from "@/components/spaces-tools";
 import { DialogUploader } from "@/components/dialogs/file";
 import { AddFolderDialog } from "@/components/dialogs/folder";
 import { toast } from "sonner";
+import { __ } from "@/lib/lang";
 
 export default function Home() {
     const folderPath = useStore(useFolderConfig, (state) => state)
@@ -59,7 +60,7 @@ export default function Home() {
 
 
     return (
-        <ContentLayout title="My Spaces" >
+        <ContentLayout title={__("My Spaces")} >
             {
                 space.write ? <>
                     <ContextMenu>
@@ -72,15 +73,15 @@ export default function Home() {
                         </ContextMenuTrigger>
                         <ContextMenuContent>
                             <ContextMenuItem onClick={() => { setIsUploadOpen(true) }} className="cursor-pointer">
-                                <div className="flex flex-row items-center gap-1 text-sm" >
+                                <div className="flex flex-row items-center gap-1 text-sm rtl:flex-row-reverse rtl:ml-auto" >
                                     <FilePlus size={15} />
-                                    <p>Upload File</p>
+                                    <p>{__("Upload File")}</p>
                                 </div>
                             </ContextMenuItem>
                             <ContextMenuItem onClick={() => { setIsOpen(true) }} className="cursor-pointer">
-                                <div className="flex flex-row items-center gap-1 text-sm">
+                                <div className="flex flex-row items-center gap-1 text-sm rtl:flex-row-reverse rtl:ml-auto">
                                     <FolderPlus size={15} />
-                                    <p>New Folder</p>
+                                    <p>{__("New Folder")}</p>
                                 </div>
                             </ContextMenuItem>
                         </ContextMenuContent>

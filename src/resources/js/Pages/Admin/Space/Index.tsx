@@ -1,6 +1,7 @@
 import { columns } from "@/components/table/columns/spaces";
 import { DataTable } from "@/components/table/data-table";
 import { ContentLayout } from "@/layout/admin/content-layout";
+import { __ } from "@/lib/lang";
 import { Space } from "@/types";
 import { usePage } from "@inertiajs/react";
 
@@ -10,12 +11,15 @@ export default function Spaces() {
         spaces: Space[]
     }>().props
     return (
-        <ContentLayout title="Spaces">
+        <ContentLayout title={__("Spaces")}>
             <div className='mb-2 flex items-center justify-between space-y-2'>
                 <div>
-                    <h2 className='text-2xl font-bold tracking-tight'>Spaces List</h2>
+                    <h2 className='text-2xl font-bold tracking-tight'>
+                        {__("Spaces List")}
+                    </h2>
                     <p className='text-muted-foreground'>
-                        Here&apos;s a list of all spaces
+                        {__("Here's a list of all spaces")}
+
                     </p>
                 </div>
             </div>

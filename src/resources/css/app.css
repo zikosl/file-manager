@@ -62,7 +62,10 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
   }
+
   body {
     @apply bg-background text-foreground;
   }

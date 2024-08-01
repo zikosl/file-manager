@@ -13,6 +13,7 @@ import {
 
 import { spaceSchema } from '@/data/schema'
 import { Link, router } from '@inertiajs/react'
+import { __ } from '@/lib/lang'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -24,7 +25,7 @@ export function DataTableRowActions<TData>({
   const space = spaceSchema.parse(row.original)
 
   function destroy() {
-    if (confirm('Are you sure you want to delete this space?')) {
+    if (confirm(__("Are you sure you want to delete this space?"))) {
       router.delete(route('admin.spaces.destroy', space.id));
     }
   }
@@ -37,20 +38,24 @@ export function DataTableRowActions<TData>({
           className='flex h-8 w-8 p-0 data-[state=open]:bg-muted'
         >
           <DotsHorizontalIcon className='h-4 w-4' />
-          <span className='sr-only'>Open menu</span>
+          <span className='sr-only'>
+            {__("Open menu")}
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
         <Link
           href={route('admin.spaces.edit', space.id)}
         >
-          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem>
+            {__("Edit")}
+          </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={destroy}
         >
-          Delete
+          {__("Delete")}
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

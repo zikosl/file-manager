@@ -25,6 +25,7 @@ import {
 
 import { DataTablePagination } from './data-table-pagination'
 import { DataTableToolbar } from './data-table-toolbar'
+import { __ } from '@/lib/lang'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -76,7 +77,7 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header, idx) => {
                   return (
                     <TableHead
-                      className={idx < 2 ? 'w-20' : idx == headerGroup.headers.length - 1 ? "w-20" : ""}
+                      className={idx < 2 ? 'w-20 rtl:text-right' : idx == headerGroup.headers.length - 1 ? "w-20" : ""}
                       key={header.id} colSpan={header.colSpan}>
                       {header.isPlaceholder
                         ? null
@@ -113,7 +114,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className='h-24 text-center'
                 >
-                  No results.
+                  {__(" No results.")}
                 </TableCell>
               </TableRow>
             )}

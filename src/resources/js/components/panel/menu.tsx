@@ -17,6 +17,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { DialogUploader } from "../dialogs/file";
 import { AddFolderDialog } from "../dialogs/folder";
 import { useState } from "react";
+import { __ } from "@/lib/lang";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -35,7 +36,7 @@ export function Menu({ isOpen, menuList }: MenuProps) {
           {menuList.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
-                <p className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
+                <p className="text-sm rtl:text-right font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
                   {groupLabel}
                 </p>
               ) : !isOpen && isOpen !== undefined && groupLabel ? (
@@ -65,12 +66,12 @@ export function Menu({ isOpen, menuList }: MenuProps) {
                               <TooltipTrigger asChild>
                                 <Button
                                   variant={"default"}
-                                  className="w-full justify-start h-12 mb-1 cursor-pointer rounded-full"
+                                  className="w-full justify-start h-12 mb-1 gap-4 cursor-pointer rtl:flex-row-reverse rounded-full"
                                   asChild
                                 >
                                   <div >
                                     <span
-                                      className={cn(isOpen === false ? "" : "mr-4")}
+                                    // className={cn(isOpen === false ? "" : "mr-4")}
                                     >
                                       <Icon size={18} />
                                     </span>
@@ -99,17 +100,17 @@ export function Menu({ isOpen, menuList }: MenuProps) {
                           <DropdownMenuItem
                             onClick={() => setUpload(true)}
                           >
-                            <div className="flex flex-row items-center gap-1 text-sm">
+                            <div className="flex flex-row items-center gap-1 text-sm rtl:flex-row-reverse rtl:ml-auto">
                               <FilePlus size={15} />
-                              <p>Upload File</p>
+                              <p>{__("Upload File")}</p>
                             </div>
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => setFolder(true)}
                           >
-                            <div className="flex flex-row items-center gap-1 text-sm">
+                            <div className="flex flex-row items-center gap-1 text-sm rtl:flex-row-reverse rtl:ml-auto">
                               <FolderPlus size={15} />
-                              <p>New Folder</p>
+                              <p>{__("New Folder")}</p>
                             </div>
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -128,9 +129,11 @@ export function Menu({ isOpen, menuList }: MenuProps) {
                                 className="w-full justify-start h-10 mb-1"
                                 asChild
                               >
-                                <Link href={href}>
+                                <Link href={href}
+                                  className="rtl:flex-row-reverse"
+                                >
                                   <span
-                                    className={cn(isOpen === false ? "" : "mr-4")}
+                                    className={cn(isOpen === false ? "" : "rtl:ml-4 ltr:mr-4")}
                                   >
                                     <Icon size={18} />
                                   </span>

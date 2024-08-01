@@ -8,6 +8,7 @@ import { Label } from "../ui/label"
 
 import { Dispatch, SetStateAction } from "react"
 import { Space } from "@/data/schema"
+import { __ } from "@/lib/lang"
 
 
 export function AddFolderDialog({ open, setOpen }: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
@@ -35,16 +36,18 @@ export function AddFolderDialog({ open, setOpen }: { open: boolean, setOpen: Dis
             <DialogPortal>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                        <DialogTitle>Create Folder</DialogTitle>
+                        <DialogTitle>
+                            {__("Create Folder")}
+                        </DialogTitle>
                         <DialogDescription>
-                            You can create folder by just click on the button below
+                            {__("You can create folder by just click on the button below.")}
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={submit}>
                         <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="name" className="text-right">
-                                    Name
+                                    {__("Name")}
                                 </Label>
                                 <Input
                                     id="name"
@@ -56,7 +59,7 @@ export function AddFolderDialog({ open, setOpen }: { open: boolean, setOpen: Dis
                         </div>
                         <DialogFooter>
                             <DialogClose asChild>
-                                <Button type="submit" disabled={processing}>Create Folder</Button>
+                                <Button type="submit" disabled={processing}>{__("Create Folder")}</Button>
                             </DialogClose>
                         </DialogFooter>
                     </form>

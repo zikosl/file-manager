@@ -36,6 +36,7 @@ import dayjs from "dayjs";
 import { FileIconCustom } from "@/lib/extensions";
 import { formatBytes } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { __ } from "@/lib/lang";
 
 export default function Dashboard() {
     const { users, spaces, files, auth } = usePage<{
@@ -47,12 +48,12 @@ export default function Dashboard() {
         }
     }>().props
     return (
-        <ContentLayout title="Dashboard">
+        <ContentLayout title={__("Dashboard")}>
             <main className=" h-full flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
                 <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                     <Card x-chunk="dashboard-01-chunk-3">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Admin</CardTitle>
+                            <CardTitle className="text-sm font-medium">{__("Admin")}</CardTitle>
                             <Activity className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
@@ -64,7 +65,7 @@ export default function Dashboard() {
                     <Card x-chunk="dashboard-01-chunk-0">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">
-                                Total Accounts
+                                {__("Total Accounts")}
                             </CardTitle>
                             <IconUsers className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
@@ -75,7 +76,7 @@ export default function Dashboard() {
                     <Card x-chunk="dashboard-01-chunk-1">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">
-                                Files
+                                {__("Files")}
                             </CardTitle>
                             <IconFiles className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
@@ -85,7 +86,7 @@ export default function Dashboard() {
                     </Card>
                     <Card x-chunk="dashboard-01-chunk-2">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Spaces</CardTitle>
+                            <CardTitle className="text-sm font-medium">{__('Spaces')}</CardTitle>
                             <OrbitIcon className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
@@ -100,26 +101,30 @@ export default function Dashboard() {
                     >
                         <CardHeader className="flex flex-row items-center">
                             <div className="grid gap-2">
-                                <CardTitle>Last User</CardTitle>
+                                <CardTitle>
+                                    {__('Last User')}
+                                </CardTitle>
                                 <CardDescription>
-                                    List of all last created users .
+                                    {__('List of all last created users .')}
                                 </CardDescription>
                             </div>
-                            <Button asChild size="sm" className="ml-auto gap-1">
+                            <Button asChild size="sm" className="ltr:ml-auto rtl:mr-auto gap-1">
                                 <Link href={route("admin.users")}>
-                                    View All
-                                    <ArrowUpRight className="h-4 w-4" />
+                                    {__('View All')}
+                                    <ArrowUpRight className="h-4 w-4 rtl:-rotate-90" />
                                 </Link>
                             </Button>
                         </CardHeader>
                         <CardContent>
                             <ScrollArea>
-                                <Table>
+                                <Table dir="auto">
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Users</TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Date
+                                            <TableHead className="rtl:text-right">
+                                                {__('Users')}
+                                            </TableHead>
+                                            <TableHead className="hidden md:table-cell rtl:text-right">
+                                                {__('Date')}
                                             </TableHead>
                                         </TableRow>
                                     </TableHeader>
@@ -144,7 +149,9 @@ export default function Dashboard() {
                     </Card>
                     <Card x-chunk="dashboard-01-chunk-5">
                         <CardHeader>
-                            <CardTitle>Recent Files</CardTitle>
+                            <CardTitle>
+                                {__('Recent Files')}
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="grid gap-8 overflow-y-scroll">
                             {/* <ScrollArea> */}

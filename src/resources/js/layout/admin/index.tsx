@@ -25,7 +25,7 @@ export default function AdminPanelLayout({
             <main
                 className={cn(
                     "min-h-[calc(100vh)] bg-zinc-50 dark:bg-zinc-900 transition-[margin-left] ease-in-out duration-300 flex flex-1",
-                    sidebar?.isOpen === false ? "lg:ml-[90px]" : "lg:ml-72"
+                    sidebar?.isOpen === false ? "ltr:lg:ml-[90px] rtl:lg:mr-[90px]" : "ltr:lg:ml-72 rtl:lg:mr-72"
                 )}
             >
                 {children}

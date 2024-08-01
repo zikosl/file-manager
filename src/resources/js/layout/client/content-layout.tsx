@@ -22,7 +22,7 @@ export function ContentLayout({ title, children }: ContentLayoutProps) {
       <Navbar menuList={menuList} title={title} >
         <UserNav />
       </Navbar>
-      <div className="container px-0  flex flex-1 flex-col">{children}</div>
+      <div className="container pt-8 pb-8 px-4 sm:px-8 flex-1 flex flex-col">{children}</div>
     </div>
   );
 }

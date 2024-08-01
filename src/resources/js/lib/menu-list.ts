@@ -6,6 +6,7 @@ import {
   Trash,
   Plus
 } from "lucide-react";
+import { __ } from "./lang";
 
 type Submenu = {
   href: string;
@@ -33,7 +34,7 @@ export function getMenuList(pathname: string): Group[] {
       menus: [
         {
           href: "Add",
-          label: "New",
+          label: __("New"),
           active: false,
           icon: Plus,
           submenus: [],
@@ -41,25 +42,25 @@ export function getMenuList(pathname: string): Group[] {
       ]
     },
     {
-      groupLabel: "Main",
+      groupLabel: __("Main"),
       menus: [
         {
           href: "/client",
-          label: "My Drive",
+          label: __("My Drive"),
           active: pathname == "/client",
           icon: HardDrive,
           submenus: []
         },
         {
           href: "/client/starred",
-          label: "Starred",
+          label: __("Starred"),
           active: pathname == "/client/starred",
           icon: Star,
           submenus: []
         },
         {
           href: "/client/spaces",
-          label: "My Spaces",
+          label: __("My Spaces"),
           active: pathname.includes("/client/spaces"),
           icon: IconPlanet,
           submenus: []
@@ -67,11 +68,11 @@ export function getMenuList(pathname: string): Group[] {
       ]
     },
     {
-      groupLabel: "Others",
+      groupLabel: __("Others"),
       menus: [
         {
           href: "/client/trash",
-          label: "Trash",
+          label: __("Trash"),
           active: pathname == "/client/trash",
           icon: Trash,
           submenus: []

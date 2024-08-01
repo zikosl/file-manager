@@ -17,6 +17,7 @@ import { useFolderConfig } from "@/hooks/use-folder-config";
 import { Files_Folders } from "@/types";
 import { AddFolderDialog } from "@/components/dialogs/folder";
 import { DialogUploader } from "@/components/dialogs/file";
+import { __ } from "@/lib/lang";
 
 export default function Starred() {
     const folderPath = useStore(useFolderConfig, (state) => state)
@@ -55,7 +56,7 @@ export default function Starred() {
     const [open, setOpen] = useState(false)
     const [upload, setUpload] = useState(false)
     return (
-        <ContentLayout title="My Drive">
+        <ContentLayout title={__("Starred")}>
             <ContextMenu>
                 <ContextMenuTrigger className="flex-1 flex">
                     <div className="flex flex-1 pt-8 pb-8 px-4 sm:px-8">
@@ -66,17 +67,17 @@ export default function Starred() {
                     <ContextMenuItem
                         onClick={() => setUpload(true)}
                         className="cursor-pointer">
-                        <div className="flex flex-row items-center gap-1 text-sm">
+                        <div className="flex flex-row items-center gap-1 text-sm rtl:flex-row-reverse rtl:ml-auto">
                             <FilePlus size={15} />
-                            <p>Upload File</p>
+                            <p>{__("Upload File")}</p>
                         </div>
                     </ContextMenuItem>
                     <ContextMenuItem
                         onClick={() => setOpen(true)}
                         className="cursor-pointer">
-                        <div className="flex flex-row items-center gap-1 text-sm">
+                        <div className="flex flex-row items-center gap-1 text-sm rtl:flex-row-reverse rtl:ml-auto">
                             <FolderPlus size={15} />
-                            <p>New Folder</p>
+                            <p>{__("New Folder")}</p>
                         </div>
                     </ContextMenuItem>
                 </ContextMenuContent>
