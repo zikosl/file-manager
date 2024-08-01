@@ -6,10 +6,11 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
 use App\Http\Middleware\HandleInertiaRequests;
-use App\Http\Middleware\CheckUserRole;
+use App\Http\Middleware\SetLocaleMiddleware;
 use App\Http\Middleware\UserMiddleware;
 use App\Providers\AppServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -27,9 +28,11 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return AppServiceProvider::CLIENT_HOME;
         });
+
         $middleware->alias([
             'admin' => AdminMiddleware::class,
-            'user' => UserMiddleware::class
+            'user' => UserMiddleware::class,
+            'locale' =>SetLocaleMiddleware::class
         ]);
         $middleware->web(HandleInertiaRequests::class);
         // $middleware->web(CheckUserRole::class);
