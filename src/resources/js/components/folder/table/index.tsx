@@ -8,11 +8,11 @@ import {
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
-    getPaginationRowModel,
+    // getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ArrowDown, ArrowUp, ArrowUpDown, Folder, Star, Trash2 } from "lucide-react"
+import { ArrowDown, ArrowUp, ArrowUpDown, Dot, Folder, Star, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import dayjs from "dayjs"
@@ -26,9 +26,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { router, usePage } from "@inertiajs/react"
+import { Link, router, usePage } from "@inertiajs/react"
 import { IconArrowBack, IconDownload, IconFolder, IconFolderBolt, IconFolderMinus, IconFolderStar, IconLink, IconStarFilled } from "@tabler/icons-react"
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu"
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { useFolderConfig } from "@/hooks/use-folder-config"
 import { useStore } from "zustand"
 import { Files_Folders } from "@/types"
@@ -215,12 +215,13 @@ export const columns: (noStar: boolean) => ColumnDef<Files_Folders>[] = (noStar 
 */
 export function DataTable({ data, children }: { data: Files_Folders[], children?: React.ReactNode }) {
 
-    const { parent, folder_id, space } = usePage<{
+    const { parent, folder_id, space, spaces, locale } = usePage<{
         folder_id: Number | null,
         parent: Number | null,
-        space: Space
+        space: Space,
+        spaces: Space[],
+        locale: string,
     }>().props
-
     const folderPath = useStore(useFolderConfig, (state) => state)
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -320,7 +321,7 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                         </TableRow>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => folderPath.router != "spaces" ? (
-                                <ContextMenu key={row.id}>
+                                <ContextMenu key={row.id} dir={locale == "ar" ? "rtl" : "ltr"}>
                                     <ContextMenuTrigger
                                         className={`${TableRow.propTypes?.className} select-none table-row border-0 hover:bg-slate-300/10 cursor-pointer`}
                                         key={row.id}
@@ -348,7 +349,7 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                     className="cursor-pointer"
                                                     onClick={() => router.delete(route("client.drive.delete", row.original.itemId))}
                                                 >
-                                                    <div className="flex rtl:flex-row-reverse rtl:ml-auto items-center gap-1 text-sm">
+                                                    <div className="flex rtl:flex-row rtl:ml-auto items-center gap-1 text-sm">
                                                         <IconFolderBolt size={15} />
                                                         <p>{__("Restore Now")}</p>
                                                     </div>
@@ -356,7 +357,7 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                 <ContextMenuItem
                                                     className="cursor-not-allowed"
                                                 >
-                                                    <div className="flex rtl:flex-row-reverse rtl:ml-auto text-destructive items-center gap-1 text-sm">
+                                                    <div className="flex rtl:flex-row rtl:ml-auto text-destructive items-center gap-1 text-sm">
                                                         <IconFolderMinus size={15} />
                                                         <p>
                                                             {__("Delete Forever")}
@@ -371,13 +372,40 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                     className="cursor-pointer"
                                                     onClick={() => router.put(route("client.drive.star", row.original.itemId))}
                                                 >
-                                                    <div className="flex rtl:flex-row-reverse rtl:ml-auto items-center gap-1 text-sm">
+                                                    <div className="flex rtl:flex-row rtl:ml-auto items-center gap-1 text-sm">
                                                         <Star size={15} />
                                                         {
                                                             <p>{row.original.starred || folderPath.router == "star" ? __("Unstar") : __("Star")} {row.original.isFile ? __("File") : __("Folder")}</p>
                                                         }
                                                     </div>
                                                 </ContextMenuItem>
+                                                {
+                                                    folderPath.router == "client" && !row.original.isFile && (
+                                                        <ContextMenuSub>
+                                                            <ContextMenuSubTrigger inset>{__("Share To")}</ContextMenuSubTrigger>
+                                                            <ContextMenuSubContent className="w-48">
+                                                                {
+                                                                    spaces?.map((v) => <ContextMenuItem className="rtl:flex-row-reverse cursor-pointer">
+                                                                        <Link
+                                                                            href={route("folder.add.space", v.id)}
+                                                                            data={{ id: row.original.id }}
+                                                                            method="post"
+                                                                            type="button"
+                                                                            className="flex flex-1"
+                                                                        >
+                                                                            <span className="rtl:flex-1">
+                                                                                {v.name}
+                                                                            </span>
+                                                                            <ContextMenuShortcut>
+                                                                                <Dot color={"#" + v.color} />
+                                                                            </ContextMenuShortcut>
+                                                                        </Link>
+                                                                    </ContextMenuItem>)
+                                                                }
+                                                            </ContextMenuSubContent>
+                                                        </ContextMenuSub>
+                                                    )
+                                                }
                                                 {
                                                     row.original.isFile && <ContextMenuItem className="cursor-pointer"
                                                         onClick={() => {
@@ -396,7 +424,7 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                                 })
                                                         }}
                                                     >
-                                                        <div className="flex rtl:flex-row-reverse rtl:ml-auto items-center gap-1 text-sm">
+                                                        <div className="flex rtl:flex-row rtl:ml-auto items-center gap-1 text-sm">
                                                             <IconLink size={15} />
                                                             <p>{__("Generate Link")}</p>
                                                         </div>
@@ -409,7 +437,7 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                             href={route("link.download", row.original.id)}
                                                             className="flex-1"
                                                         >
-                                                            <div className="flex rtl:flex-row-reverse rtl:ml-auto items-center gap-1 text-sm">
+                                                            <div className="flex rtl:flex-row rtl:ml-auto items-center gap-1 text-sm">
                                                                 <IconDownload size={15} />
                                                                 <p>{__("File Download")}</p>
                                                             </div>
@@ -420,7 +448,7 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                 <ContextMenuItem className="cursor-pointer"
                                                     onClick={() => router.delete(route("client.drive.delete", row.original.itemId))}
                                                 >
-                                                    <div className="flex rtl:flex-row-reverse rtl:ml-auto items-center gap-1 text-sm">
+                                                    <div className="flex rtl:flex-row rtl:ml-auto items-center gap-1 text-sm">
                                                         <Trash2 size={15} />
                                                         <p>{__("Delete")} {row.original.isFile ? __("File") : __("Folder")}</p>
                                                     </div>

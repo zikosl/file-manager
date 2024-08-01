@@ -14,7 +14,7 @@ use App\Models\ItemAction;
 use App\Http\Requests\FolderStoreRequest;
 use App\Http\Resources\FolderCollection;
 use App\Http\Resources\FileCollection;
-
+use App\Http\Resources\UserSpaceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,7 +25,8 @@ class ItemActionController extends Controller
       public function index(): Response
       {
           $user = Auth::user();
-  
+
+          $mySpaces = $user->spaces;
           //Load all folders inside the root path
           $folders = $user->folders()
           ->with('item_action')
@@ -50,13 +51,15 @@ class ItemActionController extends Controller
               'folders' => new FolderCollection($folders),
               "folder_id"=>null,
               "parent"=>null,
-              "files"=> new FileCollection($files)
+              "files"=> new FileCollection($files),
+              "spaces"=>new UserSpaceCollection($mySpaces)
           ]);
       }
   
       public function filter(Folder $folder): Response
       {
           $user = Auth::user();
+          $mySpaces = $user->spaces;
   
           //Load all folders inside the nested paths
           $folders = $user->folders()
@@ -84,7 +87,8 @@ class ItemActionController extends Controller
               'folders' => new FolderCollection($folders),
               "folder_id"=>$folder->id,
               "parent"=>$folder->folder_id,
-              "files"=> new FileCollection($files)
+              "files"=> new FileCollection($files),
+              "spaces"=>new UserSpaceCollection($mySpaces)
           ]);
       }
   
@@ -174,6 +178,25 @@ class ItemActionController extends Controller
         $item->update([
             "deleted"=>!$item->deleted
         ]);
+        if($item->folder){
+            $folder = $item->folder->folder_id;
+        }
+        else {
+            $folder = $item->file->folder_id;
+        }
+
+        if($folder)
+        {
+            return redirect('/client/'.$folder."/list");
+        }
+        else{
+            return redirect('/client');
+        }
+    }
+
+    public function update(ItemAction $item, Request $request): RedirectResponse
+    {
+        $item->spaces()->attach((int) $request->id);
         if($item->folder){
             $folder = $item->folder->folder_id;
         }

@@ -52,6 +52,7 @@ class Space extends Model
 
     public function items()
     {
-        return $this->belongsToMany(ItemAction::class, 'space_item_action');
+        return $this->belongsToMany(ItemAction::class, 'space_item_action')
+        ->withPivot('isShared');
     }
 }

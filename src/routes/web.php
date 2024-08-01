@@ -86,6 +86,10 @@ Route::middleware('locale')->group(function() {
         Route::post('client/{id?}', [FolderController::class, 'store'])
         ->name('client.drive.store');
 
+        //Add File to Space
+        Route::post('client/{item}/space', [ItemActionController::class, 'update'])
+        ->name('folder.add.space');
+
         //Generate File Link
         Route::post('client/{file}/temp', [FileController::class, 'getTempLink'])
         ->name('link.generate');

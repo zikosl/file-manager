@@ -57,6 +57,7 @@ class ItemAction extends Model
 
     public function spaces(): BelongsToMany
     {
-        return $this->belongsToMany(Space::class, 'space_item_action');
+        return $this->belongsToMany(Space::class, 'space_item_action')
+        ->withPivot('isShared');
     }
 }
