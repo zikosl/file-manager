@@ -37,7 +37,6 @@ class LoginController extends Controller
         }
         return redirect()->intended(AppServiceProvider::CLIENT_HOME);
     }
-
     /**
      * Destroy an authenticated session.
      */

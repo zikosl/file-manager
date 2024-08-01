@@ -19,7 +19,6 @@ class FileController extends Controller
 {
     public function upload(Space $spc, FileUploadRequest $request, FileUploadService $fileUploadService): JsonResponse
     {        
-        error_log("txttext");
         $user = Auth::user();
         $validation = $request->validated();
         $file = $validation['file'];
