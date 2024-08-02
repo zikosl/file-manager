@@ -380,15 +380,15 @@ export function DataTable({ data, children }: { data: Files_Folders[], children?
                                                     </div>
                                                 </ContextMenuItem>
                                                 {
-                                                    folderPath.router == "client" && !row.original.isFile && (
+                                                    folderPath.router == "client" && !row.original.isFile && spaces?.length > 0 && (
                                                         <ContextMenuSub>
                                                             <ContextMenuSubTrigger inset>{__("Share To")}</ContextMenuSubTrigger>
                                                             <ContextMenuSubContent className="w-48">
                                                                 {
                                                                     spaces?.map((v) => <ContextMenuItem className="rtl:flex-row-reverse cursor-pointer">
                                                                         <Link
-                                                                            href={route("folder.add.space", v.id)}
-                                                                            data={{ id: row.original.id }}
+                                                                            href={route("folder.add.space", row.original.itemId)}
+                                                                            data={{ id: v.id }}
                                                                             method="post"
                                                                             type="button"
                                                                             className="flex flex-1"

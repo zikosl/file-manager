@@ -39,17 +39,17 @@ class SpaceItemController extends Controller
         //Load all folders inside the root path
         $folders = $space->items()
             ->with("folder")
-            ->whereRelation("folder","folder_id", null)
-            ->where("deleted",false)
+            ->whereRelation("folder", "folder_id", null)
+            ->where("deleted", false)
             ->get();
 
         //Load all files inside the root path
         $files = $space->items()
             ->with("file")
-            ->whereRelation("file","folder_id", null)
-            ->where("deleted",false)
+            ->whereRelation("file", "folder_id", null)
+            ->where("deleted", false)
             ->get();
-        
+
         return Inertia::render('Client/Spaces', [
             'folders' => new SpaceFolderCollection($folders),
             "folder_id" => null,
@@ -59,13 +59,13 @@ class SpaceItemController extends Controller
             'space' => new UserSpaceResource($space),
         ]);
     }
-    public function filter(Space $id,Folder $folder)
+    public function filter(Space $id, Folder $folder)
     {
         $user = Auth::user();
         $mySpaces = $user->spaces;
 
         //Load all folders inside the nested paths
-        
+
         if (isset($id["id"])) {
             $space = $user->spaces()->find($id->id);
         } else if (sizeof($mySpaces) > 0) {
@@ -77,22 +77,22 @@ class SpaceItemController extends Controller
         //Load all folders inside the root path
         $folders = $space->items()
             ->with("folder")
-            ->whereRelation("folder","folder_id", $folder->id)
-            ->where("deleted",false)
+            ->whereRelation("folder", "folder_id", $folder->id)
+            ->where("deleted", false)
             ->get();
 
         //Load all files inside the root path
         $files = $space->items()
             ->with("file")
-            ->whereRelation("file","folder_id", $folder->id)
-            ->where("deleted",false)
+            ->whereRelation("file", "folder_id", $folder->id)
+            ->where("deleted", false)
             ->get();
-        
 
-        return Inertia::render('Client/Spaces', [            
+
+        return Inertia::render('Client/Spaces', [
             'folders' => new SpaceFolderCollection($folders),
-            "folder_id"=>$folder->id,
-            "parent"=>$folder->folder_id,
+            "folder_id" => $folder->id,
+            "parent" => $folder->folder_id,
             "files" => new SpaceFileCollection($files),
             'spaces' => new UserSpaceCollection($mySpaces),
             'space' => new UserSpaceResource($space),

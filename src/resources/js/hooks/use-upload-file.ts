@@ -29,7 +29,6 @@ export function useUploadFile(
           },
           onUploadProgress: event => {
             if (event.lengthComputable) {
-              console.log()
               setProgresses((prev) => {
                 let total = event?.total ?? event.loaded
                 return {

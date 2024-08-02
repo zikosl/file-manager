@@ -23,7 +23,6 @@ export function AddFolderDialog({ open, setOpen }: { open: boolean, setOpen: Dis
     })
     const submit = (e: any) => {
         e.preventDefault()
-        console.log(space)
         if (space) {
             post(route("client.drive.store", space.id))
         }

@@ -18,20 +18,28 @@ import { Files_Folders } from "@/types";
 import { DialogUploader } from "@/components/dialogs/file";
 import { AddFolderDialog } from "@/components/dialogs/folder";
 import { __ } from "@/lib/lang";
+import { toast } from "sonner";
 
 export default function Home() {
     const folderPath = useStore(useFolderConfig, (state) => state)
-    const { folders, files } = usePage<{
+    const { folders, files, flash } = usePage<{
         folders: Folder[],
-        files: Files[]
+        files: Files[],
+        flash: {
+            error?: string,
+            success?: string
+        }
     }>().props
-    console.log(files, folders)
     const [isOpen, setIsOpen] = useState(false)
     const [isUploadOpen, setIsUploadOpen] = useState(false)
     useEffect(() => {
         folderPath.setRouter("client")
     }, [])
-
+    useEffect(() => {
+        if (flash.error) {
+            toast.error(flash.error)
+        }
+    }, [flash])
     const data: Files_Folders[] = useMemo(() => {
         let folders_new = folders.map(v => ({
             id: v.id,

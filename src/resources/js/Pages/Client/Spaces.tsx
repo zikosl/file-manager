@@ -28,7 +28,6 @@ export default function Home() {
         files: Files[],
         space: MySpace
     }>().props
-    console.log(files, folders)
     const [isOpen, setIsOpen] = useState(false)
     const [isUploadOpen, setIsUploadOpen] = useState(false)
     useEffect(() => {

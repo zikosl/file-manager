@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('item_action_id')->constrained()->onDelete('cascade');
             $table->foreignId('space_id')->constrained()->onDelete('cascade');
             $table->boolean('isShared')->default(false);
+            $table->unique(['item_action_id', 'space_id']); 
             $table->timestamps();
         });
     }

@@ -65,7 +65,6 @@ export default function UpdateUser() {
 
     function submit(e: any) {
         e.preventDefault()
-        console.log(data)
         put(route('admin.users.update', user.id))
     }
 
