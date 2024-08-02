@@ -165,13 +165,9 @@ class ItemActionController extends Controller
         ]);
 
 
-        if ($item->folder) {
-            $folder = $item->folder->folder_id;
-        } else {
-            $folder = $item->file->folder_id;
-        }
+        $folder = $item->folder ? $item->folder->folder_id : $item->file->folder_id;
         if ($folder) {
-            return redirect('/client/' . $folder . "/list");
+            return redirect("/client/$folder/list");
         } else {
             return redirect('/client');
         }
