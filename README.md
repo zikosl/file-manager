@@ -1,99 +1,255 @@
+🚀 Uploady
 
-### Project Structure
+A modern file management and collaboration platform built with Laravel & React.
+Create spaces, manage files, share securely, and collaborate efficiently.
 
-- `docker` - Folder for all configuration files for docker and other services
-    - `nginx` - Folder for nginx configuration files
-    - `php` - Folder for php configuration files
-- `src` - Folder where the project code will be stored
-- `docker-compose.yml` - Docker compose configuration file
+🌍 Overview
 
-### Step-by-Step Guide
+Uploady is a SaaS-ready file storage and collaboration platform inspired by Google Drive.
+It allows teams and individuals to create isolated workspaces (“Spaces”), upload and manage files, invite members, and control access permissions.
 
-#### 1. Environment Setup
+Built for scalability, modularity, and clean architecture.
 
-- Remove empty files from src and mysql dirs.
+✨ Core Features
+🔐 Authentication & Security
 
-  ```
-  rm src/empty
-  rm mysql/empty
-  ```
+User registration & login
 
-- In docker-compose.yml, change the data to access the database
+Secure password hashing
 
-  ```
-  MYSQL_DATABASE: laraveldb
-  MYSQL_USER: laravel
-  MYSQL_PASSWORD: secret
-  MYSQL_ROOT_PASSWORD: secret
-  ```
+Role-based access control
 
-#### 2. Build the Project Using Docker Compose
+Space-level permissions
 
-- Run this command
-  
-  ```
-  docker compose build
-  ```
+📁 Spaces (Workspaces)
 
-#### 3. Create a Laravel Project
+Create multiple spaces
 
-- Start docker containers
+Invite users to spaces
 
-  ```
-  docker compose up -d
-  ```
+Manage user roles per space
 
-- You can verify if the project is working by opening the browser. For example, if it’s set to 80:
+📤 File Management
 
-  ```
-  http://localhost/login
-  ```
+Upload files
 
-- Start node server for the react app
-  ```
-  docker compose run --rm --service-ports npm run dev
-  ```
+Delete & organize files
 
-#### 4. Configure Laravel project 
- 
-- Configure Mysql in /src/.env . Uncomment and change:
+Access control per space
 
-  ```
-  DB_CONNECTION=mysql       # connection name, we use mysql
-  DB_HOST=mysql             # name of mysql service in docker-compose.yml
-  DB_PORT=3306              # mysql standart port 
-  DB_DATABASE=laraveldb     # database name from MYSQL_DATABASE in docker-compose.yml
-  DB_USERNAME=laravel       # username from MYSQL_USER in docker-compose.yml
-  DB_PASSWORD=secret        # user password from MYSQL_PASSWORD in docker-compose.yml
-  ```
-- Restart all services
-  
-  ```
-  docker compose down
-  docker compose up -d
-  ```
+Secure file storage
 
-#### 5. Run Migrations
+👥 Collaboration
 
-  ```
-  docker compose run --rm artisan migrate
-  ```
+Share spaces with other users
 
-#### Some useful commands
+Manage user permissions
 
-- Enter the php container (php is the name of the service from docker-compose.yml)
+Controlled file visibility
 
-  ```
-  docker compose run --rm php /bin/sh
-  ```
+🐳 DevOps Ready
 
-- If access Forbidden
+Fully Dockerized
 
-  ```
-  docker compose run --rm php /bin/sh
-  chown -R laravel:laravel /var/www/html
-  ```
+Nginx + PHP configuration
 
-- Thats It ! 
-# uploady
-this project is for a website that manages file uploads
+MySQL service
+
+Ready for cloud deployment
+
+🏗 Tech Stack
+Layer	Technology
+Backend	Laravel (PHP)
+Frontend	React
+Database	MySQL
+Web Server	Nginx
+DevOps	Docker & Docker Compose
+📸 Screenshots
+
+Replace these with real screenshots once deployed.
+
+🔐 Login Page
+/screenshots/login.png
+
+📁 Dashboard
+/screenshots/dashboard.png
+
+📂 Space View
+/screenshots/space.png
+
+📤 File Upload
+/screenshots/upload.png
+
+⚙️ Installation Guide
+1️⃣ Clone the Repository
+git clone https://github.com/your-username/uploady.git
+cd uploady
+
+2️⃣ Environment Setup
+
+Remove placeholder files:
+
+rm src/empty
+rm mysql/empty
+
+
+Update database credentials in docker-compose.yml:
+
+MYSQL_DATABASE: laraveldb
+MYSQL_USER: laravel
+MYSQL_PASSWORD: secret
+MYSQL_ROOT_PASSWORD: secret
+
+3️⃣ Build Containers
+docker compose build
+
+4️⃣ Start Containers
+docker compose up -d
+
+
+Open in browser:
+
+http://localhost/login
+
+5️⃣ Configure Laravel
+
+Edit:
+
+src/.env
+
+
+Update DB configuration:
+
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laraveldb
+DB_USERNAME=laravel
+DB_PASSWORD=secret
+
+
+Restart containers:
+
+docker compose down
+docker compose up -d
+
+6️⃣ Run Migrations
+docker compose run --rm php artisan migrate
+
+7️⃣ Start React Dev Server
+docker compose run --rm --service-ports npm run dev
+
+🔌 API Documentation
+🔐 Authentication
+Login
+POST /api/login
+
+
+Body:
+
+{
+  "email": "user@example.com",
+  "password": "password"
+}
+
+📁 Spaces
+Create Space
+POST /api/spaces
+
+Get User Spaces
+GET /api/spaces
+
+📤 Files
+Upload File
+POST /api/files
+
+
+Form Data:
+
+file: <file>
+space_id: <id>
+
+Get Files in Space
+GET /api/spaces/{id}/files
+
+👥 Users
+Invite User to Space
+POST /api/spaces/{id}/users
+
+🧪 Useful Commands
+Enter PHP container
+docker compose run --rm php sh
+
+Fix permission issues
+chown -R laravel:laravel /var/www/html
+
+🚀 Deployment (Production Tips)
+
+Set APP_ENV=production
+
+Set APP_DEBUG=false
+
+Use HTTPS
+
+Configure cloud storage (S3 recommended)
+
+Set up queue workers for file processing
+
+Use Laravel Sanctum or JWT for API authentication
+
+📈 Future Improvements
+
+Folder system
+
+File versioning
+
+Activity logs
+
+Drag & drop upload
+
+Storage quota per space
+
+Public shareable links
+
+Subscription plans (SaaS monetization)
+
+🤝 Contributing
+
+Contributions are welcome!
+
+Steps:
+
+Fork the repository
+
+Create a new branch
+
+git checkout -b feature/your-feature
+
+
+Commit changes
+
+git commit -m "Add new feature"
+
+
+Push branch
+
+git push origin feature/your-feature
+
+
+Open a Pull Request
+
+🧠 Architecture Overview
+
+RESTful API (Laravel)
+
+React SPA frontend
+
+Dockerized services
+
+MVC backend structure
+
+Role-based permission handling
+
+📄 License
+
+MIT License.
