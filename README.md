@@ -1,255 +1,342 @@
-🚀 Uploady
+# 🚀 Uploady
 
-A modern file management and collaboration platform built with Laravel & React.
-Create spaces, manage files, share securely, and collaborate efficiently.
+> A modern file management and collaboration platform built with Laravel & React.
+> Create spaces, manage files, share securely, and collaborate efficiently.
 
-🌍 Overview
+---
 
-Uploady is a SaaS-ready file storage and collaboration platform inspired by Google Drive.
+## 🌍 Overview
+
+**Uploady** is a SaaS-ready file storage and collaboration platform inspired by Google Drive.
 It allows teams and individuals to create isolated workspaces (“Spaces”), upload and manage files, invite members, and control access permissions.
 
 Built for scalability, modularity, and clean architecture.
 
-✨ Core Features
-🔐 Authentication & Security
+---
 
-User registration & login
+## ✨ Core Features
 
-Secure password hashing
+### 🔐 Authentication & Security
 
-Role-based access control
+* User registration & login
+* Secure password hashing
+* Role-based access control
+* Space-level permissions
 
-Space-level permissions
+### 📁 Spaces (Workspaces)
 
-📁 Spaces (Workspaces)
+* Create multiple spaces
+* Invite users to spaces
+* Manage user roles per space
 
-Create multiple spaces
+### 📤 File Management
 
-Invite users to spaces
+* Upload files
+* Delete & organize files
+* Access control per space
+* Secure file storage
 
-Manage user roles per space
+### 👥 Collaboration
 
-📤 File Management
+* Share spaces with other users
+* Manage user permissions
+* Controlled file visibility
 
-Upload files
+### 🐳 DevOps Ready
 
-Delete & organize files
+* Fully Dockerized
+* Nginx + PHP configuration
+* MySQL service
+* Ready for cloud deployment
 
-Access control per space
+---
 
-Secure file storage
+# 🏗 Tech Stack
 
-👥 Collaboration
+| Layer      | Technology              |
+| ---------- | ----------------------- |
+| Backend    | Laravel (PHP)           |
+| Frontend   | React                   |
+| Database   | MySQL                   |
+| Web Server | Nginx                   |
+| DevOps     | Docker & Docker Compose |
 
-Share spaces with other users
+---
 
-Manage user permissions
+# 📸 Screenshots
 
-Controlled file visibility
+> Replace these with real screenshots once deployed.
 
-🐳 DevOps Ready
+### 🔐 Login Page
 
-Fully Dockerized
-
-Nginx + PHP configuration
-
-MySQL service
-
-Ready for cloud deployment
-
-🏗 Tech Stack
-Layer	Technology
-Backend	Laravel (PHP)
-Frontend	React
-Database	MySQL
-Web Server	Nginx
-DevOps	Docker & Docker Compose
-📸 Screenshots
-
-Replace these with real screenshots once deployed.
-
-🔐 Login Page
+```
 /screenshots/login.png
+```
 
-📁 Dashboard
+### 📁 Dashboard
+
+```
 /screenshots/dashboard.png
+```
 
-📂 Space View
+### 📂 Space View
+
+```
 /screenshots/space.png
+```
 
-📤 File Upload
+### 📤 File Upload
+
+```
 /screenshots/upload.png
+```
 
-⚙️ Installation Guide
-1️⃣ Clone the Repository
+---
+
+# ⚙️ Installation Guide
+
+## 1️⃣ Clone the Repository
+
+```bash
 git clone https://github.com/your-username/uploady.git
 cd uploady
+```
 
-2️⃣ Environment Setup
+---
+
+## 2️⃣ Environment Setup
 
 Remove placeholder files:
 
+```bash
 rm src/empty
 rm mysql/empty
+```
 
+Update database credentials in `docker-compose.yml`:
 
-Update database credentials in docker-compose.yml:
-
+```yaml
 MYSQL_DATABASE: laraveldb
 MYSQL_USER: laravel
 MYSQL_PASSWORD: secret
 MYSQL_ROOT_PASSWORD: secret
+```
 
-3️⃣ Build Containers
+---
+
+## 3️⃣ Build Containers
+
+```bash
 docker compose build
+```
 
-4️⃣ Start Containers
+---
+
+## 4️⃣ Start Containers
+
+```bash
 docker compose up -d
-
+```
 
 Open in browser:
 
+```
 http://localhost/login
+```
 
-5️⃣ Configure Laravel
+---
+
+## 5️⃣ Configure Laravel
 
 Edit:
 
+```
 src/.env
-
+```
 
 Update DB configuration:
 
+```env
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=laraveldb
 DB_USERNAME=laravel
 DB_PASSWORD=secret
-
+```
 
 Restart containers:
 
+```bash
 docker compose down
 docker compose up -d
+```
 
-6️⃣ Run Migrations
+---
+
+## 6️⃣ Run Migrations
+
+```bash
 docker compose run --rm php artisan migrate
+```
 
-7️⃣ Start React Dev Server
+---
+
+## 7️⃣ Start React Dev Server
+
+```bash
 docker compose run --rm --service-ports npm run dev
+```
 
-🔌 API Documentation
-🔐 Authentication
-Login
+---
+
+# 🔌 API Documentation
+
+## 🔐 Authentication
+
+### Login
+
+```
 POST /api/login
-
+```
 
 Body:
 
+```json
 {
   "email": "user@example.com",
   "password": "password"
 }
+```
 
-📁 Spaces
-Create Space
+---
+
+## 📁 Spaces
+
+### Create Space
+
+```
 POST /api/spaces
+```
 
-Get User Spaces
+### Get User Spaces
+
+```
 GET /api/spaces
+```
 
-📤 Files
-Upload File
+---
+
+## 📤 Files
+
+### Upload File
+
+```
 POST /api/files
-
+```
 
 Form Data:
 
+```
 file: <file>
 space_id: <id>
+```
 
-Get Files in Space
+### Get Files in Space
+
+```
 GET /api/spaces/{id}/files
+```
 
-👥 Users
-Invite User to Space
+---
+
+## 👥 Users
+
+### Invite User to Space
+
+```
 POST /api/spaces/{id}/users
+```
 
-🧪 Useful Commands
-Enter PHP container
+---
+
+# 🧪 Useful Commands
+
+### Enter PHP container
+
+```bash
 docker compose run --rm php sh
+```
 
-Fix permission issues
+### Fix permission issues
+
+```bash
 chown -R laravel:laravel /var/www/html
+```
 
-🚀 Deployment (Production Tips)
+---
 
-Set APP_ENV=production
+# 🚀 Deployment (Production Tips)
 
-Set APP_DEBUG=false
+* Set `APP_ENV=production`
+* Set `APP_DEBUG=false`
+* Use HTTPS
+* Configure cloud storage (S3 recommended)
+* Set up queue workers for file processing
+* Use Laravel Sanctum or JWT for API authentication
 
-Use HTTPS
+---
 
-Configure cloud storage (S3 recommended)
+# 📈 Future Improvements
 
-Set up queue workers for file processing
+* Folder system
+* File versioning
+* Activity logs
+* Drag & drop upload
+* Storage quota per space
+* Public shareable links
+* Subscription plans (SaaS monetization)
 
-Use Laravel Sanctum or JWT for API authentication
+---
 
-📈 Future Improvements
-
-Folder system
-
-File versioning
-
-Activity logs
-
-Drag & drop upload
-
-Storage quota per space
-
-Public shareable links
-
-Subscription plans (SaaS monetization)
-
-🤝 Contributing
+# 🤝 Contributing
 
 Contributions are welcome!
 
-Steps:
+### Steps:
 
-Fork the repository
+1. Fork the repository
+2. Create a new branch
 
-Create a new branch
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+3. Commit changes
 
-git checkout -b feature/your-feature
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push branch
 
+   ```bash
+   git push origin feature/your-feature
+   ```
+5. Open a Pull Request
 
-Commit changes
+---
 
-git commit -m "Add new feature"
+# 🧠 Architecture Overview
 
+* RESTful API (Laravel)
+* React SPA frontend
+* Dockerized services
+* MVC backend structure
+* Role-based permission handling
 
-Push branch
+---
 
-git push origin feature/your-feature
-
-
-Open a Pull Request
-
-🧠 Architecture Overview
-
-RESTful API (Laravel)
-
-React SPA frontend
-
-Dockerized services
-
-MVC backend structure
-
-Role-based permission handling
-
-📄 License
+# 📄 License
 
 MIT License.
+
+
